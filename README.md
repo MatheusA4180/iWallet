@@ -14,7 +14,7 @@ Meu objetivo foi criar um aplicativo de carteira de investimentos para facilitar
 
 Optei por dividir o densenvolvimento do projeto em sprints para facilitar o controle do tempo: 
 - Sprint 1: <br />
-Splash screen(tela de inicialização), onBording screen(tela de apresentação inicial), registration screen(tela de cadastro) e login screen.
+Splash screen(tela de inicialização), onbording screen(tela de apresentação inicial), registration screen(tela de cadastro) e login screen.
 - Sprint 2: <br />
 Resume Screen(uma tela para o usuário poder ver seu rendimento da carteira com o tempo).
 - Sprint 3: <br />
