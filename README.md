@@ -8,28 +8,28 @@ Esse repositório contém um projeto mobile desenvolvido por mim durante 15 dias
 
 ## Objetivo
 
-Meu objetivo foi criar um aplicativo de carteira de investimentos para facilitar a gestão pessoal de investimentimentos, com foco em no aprendizado de algumas tecnologias como Koin,StateFow e Firebase.
+Meu objetivo foi criar um aplicativo de carteira de investimentos para facilitar a gestão pessoal de investimentos, com foco em no aprendizado de algumas tecnologias como Koin, StateFow e Firebase.
 
 ## Descrição
 
 Optei por dividir o densenvolvimento do projeto em sprints para facilitar o controle do tempo: 
 - Sprint 1: <br />
-Splash screen(tela de inicialização), onBording screen(tela de apresentação inicial), registration screen(tela de cadastro) e login screen
+Splash screen(tela de inicialização), onBording screen(tela de apresentação inicial), registration screen(tela de cadastro) e login screen.
 - Sprint 2: <br />
-Resume Screen(uma tela para o usuário poder ver seu rendimento da carteira com o tempo)
+Resume Screen(uma tela para o usuário poder ver seu rendimento da carteira com o tempo).
 - Sprint 3: <br />
-Addition products Screen(uma tela para adição de produtos(investimentos))
+Addition products Screen(uma tela para adição de produtos(investimentos)).
 - Sprint 4: <br />
-Wallet Screen(uma tela para o usuário poder ver os produtos(investimentos) que possui e o extrato de compras)
+Wallet Screen(uma tela para o usuário poder ver os produtos(investimentos) que possui e o extrato de compras).
 - Sprint 5: <br />
-Manager Screen(uma tela para o usuário gerir suas finanças pessoais)
+Manager Screen(uma tela para o usuário gerir suas finanças pessoais).
 - Sprint 6: <br />
-Profile(menu de opções relacionadas ao usuário)
+Profile(menu de opções relacionadas ao usuário).
 
 ## Extras
-- Login utilizando o Firebase auth
-- Salvar os dados de perfil do usuário no Firebase realtime database
-- Adicionar Apis para mostrar o desempenho dos investimentos em tempo real
+- Login utilizando o Firebase auth.
+- Salvar os dados de perfil do usuário no Firebase realtime database.
+- Adicionar Apis para mostrar o desempenho dos investimentos em tempo real.
 
 ## Recursos utilizados
 
