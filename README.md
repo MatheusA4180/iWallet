@@ -27,22 +27,24 @@ Manager Screen(uma tela para o usuário gerir suas finanças pessoais).
 Profile(menu de opções relacionadas ao usuário).
 
 ## Extras
+
 - Login utilizando o Firebase Auth.
 - Salvar os dados de perfil do usuário no Firebase Realtime Database.
 - Adicionar Apis para mostrar o desempenho dos investimentos em tempo real.
+- Implementar uma central de ajuda utilizando o chatbot bip.io. 
 
 ## Recursos utilizados
 
 - Arquitetura MVVM
 - Activities e fragments
-- Retrofit
+- ViewPager e TabLayout
+- ConstraintLayout e RecyclerView
+- Dialog Fragment
+- Coroutines
+- LiveData e StateFlow
+- Koin
 - Room
 - SharedPreferences
-- ConstraintLayout e RecyclerView
-- Coroutines
-- ViewPager e TabLayout
+- Retrofit
 - Firebase
-- Dialog Fragment
 - Chatbot blip.io
-- Koin
-- LiveData e StateFlow
