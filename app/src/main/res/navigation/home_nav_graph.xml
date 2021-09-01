@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/resumeFragment">
+    <fragment
+        android:id="@+id/resumeFragment"
+        android:name="com.example.iwallet.features.resume.fragments.ResumeFragment"
+        android:label="ResumeFragment"
+        tools:layout="@layout/fragment_resume"/>
+    <fragment
+        android:id="@+id/walletFragment"
+        android:name="com.example.iwallet.features.wallet.fragments.WalletFragment"
+        android:label="WalletFragment"
+        tools:layout="@layout/fragment_wallet"/>
+    <fragment
+        android:id="@+id/moneyManagerFragment"
+        android:name="com.example.iwallet.features.manager.fragments.MoneyManagerFragment"
+        android:label="MoneyManagerFragment"
+        tools:layout="@layout/fragment_money_manager"/>
+</navigation>

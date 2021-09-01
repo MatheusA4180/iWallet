@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/logo_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/aclonica"
+        android:text="@string/name_app"
+        android:textColor="@color/main_theme"
+        android:textSize="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_username_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="25dp"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        app:boxStrokeColor="@color/main_theme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_login">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_password_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Senha"
+        android:inputType="textEmailAddress"
+        app:boxStrokeColor="@color/main_theme"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@+id/login_username_layout"
+        app:layout_constraintStart_toStartOf="@+id/login_username_layout"
+        app:layout_constraintTop_toBottomOf="@+id/login_username_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Switch
+        android:id="@+id/remeber_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/login_password_layout"
+        app:layout_constraintTop_toBottomOf="@+id/login_password_layout" />
+
+    <TextView
+        android:id="@+id/text_remeber_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lembrar minha conta"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/login_password_layout"
+        app:layout_constraintTop_toTopOf="@+id/remeber_login" />
+
+    <TextView
+        android:id="@+id/forgot_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Esqueci minha senha"
+        android:textColor="@color/main_theme"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/login_create"
+        app:layout_constraintStart_toStartOf="@+id/login_create"
+        app:layout_constraintTop_toBottomOf="@+id/login_create" />
+
+    <Button
+        android:id="@+id/login_enter"
+        android:layout_width="340dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="64dp"
+        android:text="Entrar"
+        android:textSize="18sp"
+        app:backgroundTint="@color/main_theme"
+        app:cornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_remeber_login" />
+
+    <Button
+        android:id="@+id/login_create"
+        android:layout_width="340dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="20dp"
+        android:text="Criar Conta"
+        android:textColor="@color/main_theme"
+        android:textSize="18sp"
+        app:backgroundTint="#FFFEFE"
+        app:cornerRadius="25dp"
+        app:layout_constraintEnd_toEndOf="@+id/login_enter"
+        app:layout_constraintStart_toStartOf="@+id/login_enter"
+        app:layout_constraintTop_toBottomOf="@+id/login_enter"
+        app:strokeColor="@color/main_theme"
+        app:strokeWidth="2dp" />
+
+    <ProgressBar
+        android:id="@+id/progressCircular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
