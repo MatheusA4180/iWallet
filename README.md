@@ -27,8 +27,8 @@ Manager Screen(uma tela para o usuário gerir suas finanças pessoais).
 Profile(menu de opções relacionadas ao usuário).
 
 ## Extras
-- Login utilizando o Firebase auth.
-- Salvar os dados de perfil do usuário no Firebase realtime database.
+- Login utilizando o Firebase Auth.
+- Salvar os dados de perfil do usuário no Firebase Realtime Database.
 - Adicionar Apis para mostrar o desempenho dos investimentos em tempo real.
 
 ## Recursos utilizados
