@@ -28,7 +28,7 @@ Profile(menu de opções relacionadas ao usuário).
 
 ## Extras
 
-- Login utilizando o Firebase Auth.
+- Login e cadastro de usuários utilizando o Firebase Auth.
 - Salvar os dados de perfil do usuário no Firebase Realtime Database.
 - Adicionar Apis para mostrar o desempenho dos investimentos em tempo real.
 - Implementar uma central de ajuda utilizando o chatbot bip.io. 
