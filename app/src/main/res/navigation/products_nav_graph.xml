@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/products_nav_graph.xml"
+    app:startDestination="@id/addOrSubtractProductFragment">
+
+    <fragment
+        android:id="@+id/addOrSubtractProductFragment"
+        android:name="com.example.iwallet.features.resume.fragments.AddOrSubtractProductFragment"
+        android:label="AddOrSubtractProductFragment"
+        tools:layout="@layout/fragment_add_or_subtract_product">
+        <action
+            android:id="@+id/action_addOrSubtractProductFragment_to_descriptionProductFragment"
+            app:destination="@id/descriptionProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/descriptionProductFragment"
+        android:name="com.example.iwallet.features.resume.fragments.DescriptionProductFragment"
+        android:label="DescriptionProductFragment"
+        tools:layout="@layout/fragment_description_product">
+        <argument
+            android:name="nameBroker"
+            app:argType="string" />
+        <argument
+            android:name="nameProduct"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProductFragment"
+        android:name="com.example.iwallet.features.resume.fragments.NewProductFragment"
+        android:label="NewProductFragment"
+        tools:layout="@layout/fragment_new_product">
+        <action
+            android:id="@+id/action_newProductFragment_to_descriptionNewProductFragment"
+            app:destination="@id/descriptionNewProductFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/descriptionNewProductFragment"
+        android:name="com.example.iwallet.features.resume.fragments.DescriptionNewProductFragment"
+        android:label="DescriptionNewProductFragment"
+        tools:layout="@layout/fragment_description_new_product">
+        <argument
+            android:name="category"
+            app:argType="string" />
+    </fragment>
+</navigation>

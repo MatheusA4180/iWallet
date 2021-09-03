@@ -64,7 +64,7 @@ class LoginViewModel(
     private fun login() {
         viewModelScope.launch {
             _showLoading.postValue(true)
-            delay(2000L)
+            delay(1500L)
             if(email==loginRepository.getSaveEmailUserRegistration()
                 && password==loginRepository.getSavePasswordUserRegistration()){
                 _goToHome.postValue(Unit)

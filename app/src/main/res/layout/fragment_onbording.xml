@@ -88,7 +88,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
-                android:text="Sua nova maneira de gerenciar suas finaças e investimentos"
+                android:text="Sua nova maneira de gerenciar finanças e investimentos"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="20dp"

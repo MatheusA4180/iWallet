@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
@@ -35,10 +34,10 @@ class SplashFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.logoSplash.animation = AnimationUtils
-            .loadAnimation(requireContext(), R.anim.top_center_animation)
+            .loadAnimation(requireContext(), R.anim.top_center_anim)
 
         binding.logoImageSplash.animation = AnimationUtils
-            .loadAnimation(requireContext(), R.anim.top_center_animation)
+            .loadAnimation(requireContext(), R.anim.top_center_anim)
 
         Handler(Looper.getMainLooper()).postDelayed({
             viewModel.initSplash()

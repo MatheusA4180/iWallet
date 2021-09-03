@@ -7,5 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="main_theme">#5cbd4c</color>
+    <color name="main_theme">#FF018786</color>
+    <color name="green_Transaction">#458A3D</color>
+    <color name="red_Transaction">#F84343</color>
+    <color name="orange_Transaction">#FF9800</color>
 </resources>

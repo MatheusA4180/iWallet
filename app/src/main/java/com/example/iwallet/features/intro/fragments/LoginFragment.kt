@@ -35,10 +35,12 @@ class LoginFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginEmail.addTextChangedListener {
+            binding.loginUsernameLayout.isErrorEnabled = false
             viewModel.onEmailChange(it.toString())
         }
 
         binding.loginPassword.addTextChangedListener {
+            binding.loginPasswordLayout.isErrorEnabled = false
             viewModel.onPasswordChange(it.toString())
         }
 

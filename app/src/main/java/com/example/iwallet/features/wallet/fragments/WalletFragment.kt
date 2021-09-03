@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.iwallet.databinding.FragmentWalletBinding
+import com.example.iwallet.features.wallet.adapter.ViewPagerWalletAdapter
+import com.google.android.material.tabs.TabLayoutMediator
 
 class WalletFragment: Fragment() {
 
@@ -24,6 +26,29 @@ class WalletFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        viewPagerAndTabLayoutConfig()
+
+    }
+
+    private fun viewPagerAndTabLayoutConfig() {
+        binding.pagerWallet.adapter = ViewPagerWalletAdapter(this)
+        tabLayoutConfig()
+    }
+
+    private fun tabLayoutConfig() {
+        TabLayoutMediator(
+            binding.tabLayoutWallet,
+            binding.pagerWallet
+        ) { tab, position ->
+            when (position) {
+                0 -> {
+                    tab.text = "Produtos"
+                }
+                1 -> {
+                    tab.text = "Extrato"
+                }
+            }
+        }.attach()
     }
 
     override fun onDestroyView() {

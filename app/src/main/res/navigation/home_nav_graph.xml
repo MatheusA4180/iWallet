@@ -8,7 +8,11 @@
         android:id="@+id/resumeFragment"
         android:name="com.example.iwallet.features.resume.fragments.ResumeFragment"
         android:label="ResumeFragment"
-        tools:layout="@layout/fragment_resume"/>
+        tools:layout="@layout/fragment_resume">
+        <action
+            android:id="@+id/action_resumeFragment_to_productsActivity"
+            app:destination="@id/productsActivity" />
+    </fragment>
     <fragment
         android:id="@+id/walletFragment"
         android:name="com.example.iwallet.features.wallet.fragments.WalletFragment"
@@ -19,4 +23,13 @@
         android:name="com.example.iwallet.features.manager.fragments.MoneyManagerFragment"
         android:label="MoneyManagerFragment"
         tools:layout="@layout/fragment_money_manager"/>
+    <activity
+        android:id="@+id/productsActivity"
+        android:name="com.example.iwallet.features.resume.ProductsActivity"
+        android:label="activity_products"
+        tools:layout="@layout/activity_products">
+        <argument
+            android:name="fragmentSelected"
+            app:argType="string"/>
+    </activity>
 </navigation>

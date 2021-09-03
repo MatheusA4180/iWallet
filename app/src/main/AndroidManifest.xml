@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.iwallet">
+    package="com.example.iwallet" >
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:name=".utils.di.MyApp"
-        android:theme="@style/Theme.IWallet">
-        <activity android:name=".features.HomeActivity"/>
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_custon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_custon_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.IWallet" >
+        <activity android:name=".features.resume.ProductsActivity" />
+        <activity android:name=".features.HomeActivity" />
         <activity
             android:name=".features.intro.IntroActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
