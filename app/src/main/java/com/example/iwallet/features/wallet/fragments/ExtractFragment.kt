@@ -28,7 +28,11 @@ class ExtractFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.listExtract.adapter = ListExtractAdapter(listOf("","","","","",""))
+        viewModel.requestListExtracts()
+
+        viewModel.listExtracts.observe(viewLifecycleOwner,{
+            binding.listExtract.adapter = ListExtractAdapter(it,requireContext())
+        })
 
     }
 

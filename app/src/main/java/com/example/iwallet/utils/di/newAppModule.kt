@@ -4,14 +4,8 @@ import android.content.Context
 import com.example.iwallet.R
 import com.example.iwallet.features.intro.repository.*
 import com.example.iwallet.features.intro.viewmodel.*
-import com.example.iwallet.features.resume.repository.AddOrSubtractProductRepository
-import com.example.iwallet.features.resume.repository.DescriptionNewProductRepository
-import com.example.iwallet.features.resume.repository.DescriptionProductRepository
-import com.example.iwallet.features.resume.repository.ResumeRepository
-import com.example.iwallet.features.resume.viewmodel.AddOrSubtractProductViewModel
-import com.example.iwallet.features.resume.viewmodel.DescriptionNewProductViewModel
-import com.example.iwallet.features.resume.viewmodel.DescriptionProductViewModel
-import com.example.iwallet.features.resume.viewmodel.ResumeViewModel
+import com.example.iwallet.features.resume.repository.*
+import com.example.iwallet.features.resume.viewmodel.*
 import com.example.iwallet.features.wallet.repository.ExtractRepository
 import com.example.iwallet.features.wallet.viewmodel.ExtractViewModel
 import com.example.iwallet.utils.data.local.SessionManager
@@ -40,6 +34,10 @@ val newAppModule = module {
 
     viewModel {
         ResumeViewModel(get())
+    }
+
+    viewModel {
+        NewsViewModel(get())
     }
 
     viewModel {
@@ -79,7 +77,11 @@ val newAppModule = module {
     }
 
     factory {
-        DescriptionNewProductRepository(get())
+        NewsRepository(get())
+    }
+
+    factory {
+        DescriptionNewProductRepository(get(),get())
     }
 
     factory {
@@ -87,11 +89,15 @@ val newAppModule = module {
     }
 
     factory {
-        DescriptionProductRepository(get())
+        DescriptionProductRepository(get(),get())
     }
 
     factory {
         ExtractRepository(get())
+    }
+
+    single {
+        AppDatabase.getInstance(androidContext()).extractDAO()
     }
 
     single {

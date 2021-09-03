@@ -28,47 +28,25 @@ class ProfileDialog: DialogFragment(), ListOptionsProfileAdapter.ClickedProfileL
                 R.drawable.ic_profile
             ),
             ListOptionsProfileAdapter.ItemOptionProfile(
-                "lixo",
+                "Central de ajuda",
+                R.drawable.ic_help
+            ),
+            ListOptionsProfileAdapter.ItemOptionProfile(
+                "Segurança",
+                R.drawable.ic_security
+            ),
+            ListOptionsProfileAdapter.ItemOptionProfile(
+                "Sobre",
+                R.drawable.ic_about
+            ),
+            ListOptionsProfileAdapter.ItemOptionProfile(
+                "Sair da Conta",
+                R.drawable.ic_exit_login
+            ),
+            ListOptionsProfileAdapter.ItemOptionProfile(
+                "Excluir Conta",
                 R.drawable.ic_trash
             )
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.my_profile),
-//                R.drawable.ic_user
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.income_tax),
-//                R.drawable.ic_money_white
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.benefits_and_tecnobank),
-//                R.drawable.ic_star
-//            ), ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.nominate_and_win),
-//                R.drawable.ic_nominate_and_win
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.offer),
-//                R.drawable.ic_win_oferts
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.limits_pix),
-//                R.drawable.ic_limits_pix
-//            ), ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.help_center),
-//                R.drawable.ic_help
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.security),
-//                R.drawable.ic_secure
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.close_account),
-//                R.drawable.ic_close_account
-//            ),
-//            ListOptionsProfileAdapter.ItemOptionProfile(
-//                getString(R.string.exit),
-//                R.drawable.ic_exit_login
-//            )
         )
     }
 
@@ -99,9 +77,9 @@ class ProfileDialog: DialogFragment(), ListOptionsProfileAdapter.ClickedProfileL
     }
 
     override fun clickProfileListener(positionRecyclerView: Int) {
-        if(positionRecyclerView == 6){
+        if(positionRecyclerView == 1){
             openWebPage("https://chat.blip.ai/?appKey=YXNzaXN0ZW50ZXZpcnR1YWx0ZWNub2Jhbms6MjEyNDY4M2QtYmMzMS00ZmUyLTlkMDQtYWRmODhmMDU4YWMx")
-        }else if (positionRecyclerView == 9) {
+        }else if (positionRecyclerView == 4) {
             AlertDialog.Builder(requireContext())
                 .setTitle("Deseja sair do aplicativo?")
                 .setMessage("")

@@ -27,6 +27,14 @@ class DescriptionProductViewModel(
         product.name = nameProduct
     }
 
+    fun changeBrokerProduct(nameBroker: String) {
+        product.broker = nameBroker
+    }
+
+    fun changeCategotyProduct(category: String) {
+        product.category = category
+    }
+
     fun changePriceProduct(price: String) {
         product.price = price
     }

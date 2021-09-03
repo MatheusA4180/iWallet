@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.resume.repository.ResumeRepository
+import com.example.iwallet.utils.model.resume.News
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -28,6 +29,8 @@ class ResumeViewModel(
         viewModelScope.launch {
             _showLoading.postValue(true)
             delay(1500L)
+            sumCurrentBalance = 0.0
+            sumProfitability = 0.0
             resumeRepository.returnListProducts().forEach {
                 sumCurrentBalance += it.quantity.toDouble() * it.price.toDouble()
                 sumProfitability += it.rate.toDouble()

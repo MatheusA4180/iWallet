@@ -11,4 +11,5 @@
     <color name="green_Transaction">#458A3D</color>
     <color name="red_Transaction">#F84343</color>
     <color name="orange_Transaction">#FF9800</color>
+    <color name="blue_transaction">#2270E3</color>
 </resources>

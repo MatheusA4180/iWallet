@@ -33,8 +33,11 @@ class ListProductsAdapter(
             holder.balanceProduct.text =
                 "R$ ${balance.toString().replace(".", ",")}"
             holder.itemView.setOnClickListener {
-                clickedProductListener.clickProductListener(position,
-                    listProducts[position].broker,listProducts[position].name)
+                clickedProductListener.clickProductListener(
+                    listProducts[position].broker,
+                    listProducts[position].name,
+                    listProducts[position].category
+                )
             }
         }
     }
@@ -48,7 +51,11 @@ class ListProductsAdapter(
     }
 
     interface ClickedProductListener {
-        fun clickProductListener(positionRecyclerView: Int,nameBroker: String,nameProduct: String)
+        fun clickProductListener(
+            nameBroker: String,
+            nameProduct: String,
+            category : String
+        )
     }
 
 }

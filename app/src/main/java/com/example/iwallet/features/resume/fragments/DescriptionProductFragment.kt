@@ -41,6 +41,8 @@ class DescriptionProductFragment : Fragment() {
         paintButtonOn(binding.addApplication)
 
         viewModel.changeNameProduct(arguments.nameProduct)
+        viewModel.changeBrokerProduct(arguments.nameBroker)
+        viewModel.changeCategotyProduct(arguments.category)
 
         binding.toolbarDescriptionProduct.setNavigationOnClickListener {
             findNavController().navigateUp()

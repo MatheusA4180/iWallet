@@ -1,19 +1,22 @@
 package com.example.iwallet.features.resume.repository
 
-import com.example.iwallet.features.resume.fragments.DescriptionProductFragment
 import com.example.iwallet.features.resume.fragments.DescriptionProductFragment.Companion.APPLICATION
+import com.example.iwallet.utils.data.local.database.ExtractDAO
 import com.example.iwallet.utils.data.local.database.ProductDAO
 import com.example.iwallet.utils.model.resume.Product
 import com.example.iwallet.utils.model.resume.ProductEntity
+import com.example.iwallet.utils.model.wallet.ExtractEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DescriptionProductRepository(
-    private val productDAO: ProductDAO
+    private val productDAO: ProductDAO,
+    private val extractDAO: ExtractDAO
     ) {
 
     suspend fun registerUpdateProduct(productNew: Product,buttonPressed: String) {
         withContext(Dispatchers.IO){
+            saveExtract(productNew,buttonPressed)
             val productOld = productDAO.searchProduct(productNew.name)
             if(buttonPressed == APPLICATION){
                 productDAO.updateProduct(
@@ -30,6 +33,21 @@ class DescriptionProductRepository(
                     calcNewRateRescue(productOld,productNew)
                 )
             }
+        }
+    }
+
+    private suspend fun saveExtract(productNew: Product, buttonPressed: String) {
+        withContext(Dispatchers.IO){
+            extractDAO.saveExtract(
+                ExtractEntity(
+                    productNew.broker,
+                    productNew.name,
+                    productNew.category,
+                    (productNew.price.toDouble() * productNew.quantity.toDouble()).toString(),
+                    productNew.date,
+                    buttonPressed
+                )
+            )
         }
     }
 

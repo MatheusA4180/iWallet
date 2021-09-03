@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "938635811206",
+    "project_id": "iwallet-f4cdf",
+    "storage_bucket": "iwallet-f4cdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938635811206:android:6d637f8a5a92f8ae27b407",
+        "android_client_info": {
+          "package_name": "com.example.iwallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "938635811206-db6mikullio5qpknbcpm93u6ctedk9hn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCytao6FPIv69mgihe7he89MjZWx28ZdMU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "938635811206-db6mikullio5qpknbcpm93u6ctedk9hn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

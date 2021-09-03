@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:backgroundTint="@color/green_Transaction">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_resume"
@@ -13,16 +14,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/resume_menu"/>
+        app:menu="@menu/resume_menu" />
 
     <TextView
         android:id="@+id/title_toolbar_resume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"
-        android:text="@string/app_name"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/aclonica"
+        android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="28sp"
@@ -43,25 +44,15 @@
         app:srcCompat="@drawable/ic_plus" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_application"
+        android:id="@+id/add_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/green_Transaction"
+        android:backgroundTint="@color/blue_transaction"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/add_button"
         app:layout_constraintEnd_toEndOf="@+id/add_button"
-        app:srcCompat="@drawable/ic_up_arrow" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_rescue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/red_Transaction"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/add_application"
-        app:layout_constraintEnd_toEndOf="@+id/add_application"
-        app:srcCompat="@drawable/ic_down_arrow" />
+        app:srcCompat="@drawable/ic_transaction" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_product"
@@ -69,8 +60,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/orange_Transaction"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/add_rescue"
-        app:layout_constraintEnd_toEndOf="@+id/add_rescue"
+        app:layout_constraintBottom_toTopOf="@+id/add_transaction"
+        app:layout_constraintEnd_toEndOf="@+id/add_transaction"
         app:srcCompat="@drawable/ic_new_product" />
 
     <TextView
@@ -102,12 +93,12 @@
         android:layout_width="5dp"
         android:layout_height="120dp"
         android:layout_marginStart="60dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginTop="24dp"
         app:cardBackgroundColor="@color/main_theme"
         app:cardCornerRadius="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_resume" />
 
     <TextView
         android:id="@+id/currentBalance"
@@ -140,5 +131,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager_news"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text_title_news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Notícias"
+        android:textColor="@color/main_theme"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/pager_news"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_title_news"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

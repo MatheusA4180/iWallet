@@ -1,6 +1,8 @@
 package com.example.iwallet.features.resume.repository
 
 import com.example.iwallet.utils.data.local.database.ProductDAO
+import com.example.iwallet.utils.data.remote.ApiService
+import com.example.iwallet.utils.model.resume.News
 import com.example.iwallet.utils.model.resume.Product
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentLoginBinding
 import com.example.iwallet.features.intro.viewmodel.LoginViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment: Fragment() {
@@ -19,7 +21,7 @@ class LoginFragment: Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding: FragmentLoginBinding get() = _binding!!
     private val viewModel: LoginViewModel by viewModel()
-
+    private var auth = Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,6 +88,15 @@ class LoginFragment: Fragment() {
         }
 
         binding.loginEnter.setOnClickListener {
+            auth.signInWithEmailAndPassword("matheus@gmail.com","123456")
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        //Toast.makeText(requireContext(), user.toString(), Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Falha no login ", Toast.LENGTH_SHORT).show()
+                    }
+                }
             viewModel.onLoginClicked()
         }
 

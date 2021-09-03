@@ -55,10 +55,10 @@ class AddOrSubtractProductFragment : Fragment(), ListProductsAdapter.ClickedProd
 
     }
 
-    override fun clickProductListener(positionRecyclerView: Int, nameBroker: String,nameProduct: String) {
+    override fun clickProductListener(nameBroker: String,nameProduct: String,category: String) {
         findNavController()
             .navigate(AddOrSubtractProductFragmentDirections
-                .actionAddOrSubtractProductFragmentToDescriptionProductFragment(nameBroker,nameProduct))
+                .actionAddOrSubtractProductFragmentToDescriptionProductFragment(nameBroker,nameProduct,category))
     }
 
     override fun onDestroyView() {
