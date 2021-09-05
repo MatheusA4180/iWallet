@@ -7,7 +7,7 @@ import com.example.iwallet.features.intro.repository.SplashRepository
 
 class SplashViewModel(
     private val splashRepository: SplashRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _splashToOnBoarding = MutableLiveData<Unit>()
     val splashToOnBoarding: LiveData<Unit> = _splashToOnBoarding

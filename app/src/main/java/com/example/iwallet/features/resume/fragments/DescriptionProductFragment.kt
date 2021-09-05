@@ -1,6 +1,7 @@
 package com.example.iwallet.features.resume.fragments
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentDescriptionProductBinding
 import com.example.iwallet.features.resume.viewmodel.DescriptionProductViewModel
 import com.example.iwallet.utils.helperfunctions.HelperFunctions.formatDate
+import com.flask.colorpicker.ColorPickerView
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,6 +46,7 @@ class DescriptionProductFragment : Fragment() {
         viewModel.changeNameProduct(arguments.nameProduct)
         viewModel.changeBrokerProduct(arguments.nameBroker)
         viewModel.changeCategotyProduct(arguments.category)
+        viewModel.changeColorProduct(arguments.color.toInt())
 
         binding.toolbarDescriptionProduct.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -74,6 +78,8 @@ class DescriptionProductFragment : Fragment() {
 
         binding.nameProductDescription.text = "Produto: " + arguments.nameProduct
 
+        binding.colorProduct.setCardBackgroundColor(arguments.color.toInt())
+
         binding.registrationPrice.addTextChangedListener {
             viewModel.changePriceProduct(it.toString())
         }
@@ -97,6 +103,26 @@ class DescriptionProductFragment : Fragment() {
                         viewModel.changeDateProduct(dateFormat)
                     }
                 }.show(childFragmentManager, null)
+        }
+
+        binding.colorProduct.setOnClickListener {
+            ColorPickerDialogBuilder
+                .with(context)
+                .setTitle("Escolha a nova cor do produto")
+                .initialColor(arguments.color.toInt())
+                .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
+                .density(12)
+                .setPositiveButton(
+                    "Ok"
+                ) { dialog, selectedColor, allColors ->
+                    binding.colorProduct.setCardBackgroundColor(selectedColor)
+                    viewModel.changeColorProduct(selectedColor)
+                }
+                .setNegativeButton(
+                    "Cancelar"
+                ) { dialog, which -> }
+                .build()
+                .show()
         }
 
         binding.registrationApplyConfirm.setOnClickListener {

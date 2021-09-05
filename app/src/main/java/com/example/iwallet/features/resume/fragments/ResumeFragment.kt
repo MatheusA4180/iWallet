@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentResumeBinding
 import com.example.iwallet.features.resume.ProfileDialog
+import com.example.iwallet.features.resume.adapter.ListProductCompactAdapter
 import com.example.iwallet.features.resume.adapter.ViewPagerNewsAdapter
 import com.example.iwallet.features.resume.viewmodel.ResumeViewModel
 import com.example.iwallet.utils.helperfunctions.HelperFunctions.converterToReal
@@ -58,8 +59,22 @@ class ResumeFragment: Fragment() {
         binding.pagerNews.adapter = ViewPagerNewsAdapter(this)
 
         pieChart = binding.pieChartView
-        initPieChart()
-        showPieChart()
+
+        viewModel.listProducts.observe(viewLifecycleOwner,{
+            binding.listProductsDescription.adapter = ListProductCompactAdapter(it)
+
+            //initializing data
+            val typeAmountMap: MutableMap<String, Int> = HashMap()
+            val colors: ArrayList<Int> = ArrayList()
+            it.forEach { product ->
+                typeAmountMap[product.name] = (product.quantity.toDouble() * product.price.toDouble()).toInt()
+                colors.add(product.color.toInt())
+            }
+
+            initPieChart()
+            showPieChart(typeAmountMap,colors)
+
+        })
 
         binding.addButton.setOnClickListener {
             setVisibility(clicked)
@@ -93,10 +108,6 @@ class ResumeFragment: Fragment() {
             binding.profitability.text = "${it.toString().replace(".",",")} %"
         })
 
-        viewModel.showLoading.observe(viewLifecycleOwner,{
-            binding.progressCircular.isVisible = it
-        })
-
     }
 
     private fun navigateToProductActivity(argument: String){
@@ -128,45 +139,21 @@ class ResumeFragment: Fragment() {
     }
 
     private fun initPieChart() {
-        //using percentage as values instead of amount
         pieChart!!.setUsePercentValues(true)
-
-        //remove the description label on the lower left corner, default true if not set
-        //pieChart!!.description.isEnabled = false
+        pieChart!!.description.isEnabled = false
         pieChart!!.legend.isEnabled = false
-        //enabling the user to rotate the chart, default true
-        pieChart!!.isRotationEnabled = true
-        //adding friction when rotating the pie chart
-        pieChart!!.dragDecelerationFrictionCoef = 0.9f
-        //setting the first entry start from right hand side, default starting from top
-        pieChart!!.rotationAngle = 0f
-
         //highlight the entry when it is tapped, default true if not set
-        pieChart!!.isHighlightPerTapEnabled = true
+        pieChart!!.isHighlightPerTapEnabled = false
         //adding animation so the entries pop up from 0 degree
         pieChart!!.animateY(1400, Easing.EaseInOutQuad)
         //setting the color of the hole in the middle, default white
-        pieChart!!.setHoleColor(Color.parseColor("#FFFFFF"))
+        //pieChart!!.holeRadius = 0f
+       pieChart!!.isDrawHoleEnabled = false
     }
 
-    private fun showPieChart() {
+    private fun showPieChart(typeAmountMap: MutableMap<String, Int>, colors: ArrayList<Int>) {
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = ""
-
-        //initializing data
-        val typeAmountMap: MutableMap<String, Int> = HashMap()
-        typeAmountMap["Ações"] = 500
-        typeAmountMap["Fii"] = 1000
-        typeAmountMap["Tesouro Direto"] = 650
-
-        //initializing colors for the entries
-        val colors: ArrayList<Int> = ArrayList()
-        colors.add(ContextCompat
-            .getColor(requireContext(), R.color.red_Transaction))
-        colors.add(ContextCompat
-            .getColor(requireContext(), R.color.orange_Transaction))
-        colors.add(ContextCompat
-            .getColor(requireContext(), R.color.green_Transaction))
 
         //input data and fit data into pie chart entry
         for (type in typeAmountMap.keys) {
@@ -181,7 +168,7 @@ class ResumeFragment: Fragment() {
         pieDataSet.colors = colors
         //
         pieDataSet.valueTextColor = ContextCompat
-            .getColor(requireContext(), R.color.main_theme)
+            .getColor(requireContext(), R.color.black)
         //grouping the data set from entry to chart
         val pieData = PieData(pieDataSet)
         //showing the value of the entries, default true if not set

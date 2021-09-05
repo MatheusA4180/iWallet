@@ -11,7 +11,7 @@ data class ExtractEntity(
     val balance: String = "0.0",
     val date: String = "",
     val type: String = ""
-){
+) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 }

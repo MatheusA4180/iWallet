@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iwallet.R
 import com.example.iwallet.features.resume.fragments.DescriptionProductFragment.Companion.APPLICATION
+import com.example.iwallet.utils.helperfunctions.HelperFunctions.converterToReal
 import com.example.iwallet.utils.model.wallet.Extract
 
 class ListExtractAdapter(
@@ -29,43 +30,46 @@ class ListExtractAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ExtractViewHolder) {
-            holder.extractBroker.text = listExtracts[position].broker
-            holder.extractCategory.text = listExtracts[position].category
-            holder.extractDate.text = listExtracts[position].date
-            holder.extractProductDescription.text = listExtracts[position].name
-            holder.extractValueTransation.text = listExtracts[position].balance
+            holder.bind(listExtracts,position)
             if(listExtracts[position].type == APPLICATION){
-                holder.extractProductDescription.setTextColor(ContextCompat
-                    .getColor(context, R.color.green_Transaction))
-                holder.extractValueTransation.setTextColor(ContextCompat
-                    .getColor(context, R.color.green_Transaction))
-                holder.extractIcon.setImageResource(R.drawable.ic_application)
-                holder.extractIcon.drawable.setTint(ContextCompat
-                    .getColor(context, R.color.green_Transaction))
-                holder.extractBanner.setCardBackgroundColor(ContextCompat
-                    .getColor(context, R.color.green_Transaction))
+                holder.setColorAndIcon(R.color.green_Transaction,context,R.drawable.ic_application)
             }else{
-                holder.extractProductDescription.setTextColor(ContextCompat
-                    .getColor(context, R.color.red_Transaction))
-                holder.extractValueTransation.setTextColor(ContextCompat
-                    .getColor(context, R.color.red_Transaction))
-                holder.extractIcon.setImageResource(R.drawable.ic_rescue)
-                holder.extractIcon.drawable.setTint(ContextCompat
-                    .getColor(context, R.color.red_Transaction))
-                holder.extractBanner.setCardBackgroundColor(ContextCompat
-                    .getColor(context, R.color.red_Transaction))
+                holder.setColorAndIcon(R.color.red_Transaction,context,R.drawable.ic_rescue)
             }
         }
     }
 
     class ExtractViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val extractBanner: CardView = itemView.findViewById(R.id.linear_banner)
-        val extractIcon: ImageView = itemView.findViewById(R.id.extract_icon)
-        val extractBroker: TextView = itemView.findViewById(R.id.extract_broker)
-        val extractCategory: TextView = itemView.findViewById(R.id.extract_category)
-        val extractDate: TextView = itemView.findViewById(R.id.extract_date)
-        val extractProductDescription: TextView = itemView.findViewById(R.id.extract_product_description)
-        val extractValueTransation: TextView = itemView.findViewById(R.id.extract_value_transaction)
+
+        private val extractBanner: CardView = itemView.findViewById(R.id.linear_banner)
+        private val extractIcon: ImageView = itemView.findViewById(R.id.extract_icon)
+        private val extractBroker: TextView = itemView.findViewById(R.id.extract_broker)
+        private val extractCategory: TextView = itemView.findViewById(R.id.extract_category)
+        private val extractDate: TextView = itemView.findViewById(R.id.extract_date)
+        private val extractProductDescription: TextView = itemView.findViewById(R.id.extract_product_description)
+        private val extractValueTransation: TextView = itemView.findViewById(R.id.extract_value_transaction)
+
+        fun bind(listExtracts: List<Extract>, position: Int) {
+            extractBroker.text = listExtracts[position].broker
+            extractCategory.text = listExtracts[position].category
+            extractDate.text = listExtracts[position].date
+            extractProductDescription.text = listExtracts[position].name
+            extractValueTransation.text = converterToReal(listExtracts[position].balance.toDouble())
+        }
+
+        fun setColorAndIcon(color: Int, context: Context, icon: Int) {
+            extractProductDescription.setTextColor(ContextCompat
+                .getColor(context, color))
+            extractValueTransation.setTextColor(ContextCompat
+                .getColor(context, color))
+            extractIcon.setImageResource(icon)
+            extractIcon.drawable.setTint(ContextCompat
+                .getColor(context, color))
+            extractBanner.setCardBackgroundColor(ContextCompat
+                .getColor(context, color))
+        }
+
+
     }
 
 }

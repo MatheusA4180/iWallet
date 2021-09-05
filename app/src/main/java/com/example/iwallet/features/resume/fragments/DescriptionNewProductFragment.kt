@@ -1,9 +1,11 @@
 package com.example.iwallet.features.resume.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -12,10 +14,12 @@ import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentDescriptionNewProductBinding
 import com.example.iwallet.features.resume.viewmodel.DescriptionNewProductViewModel
 import com.example.iwallet.utils.helperfunctions.HelperFunctions.formatDate
+import com.flask.colorpicker.ColorPickerView
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.google.android.material.datepicker.MaterialDatePicker
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
 import java.util.*
+
 
 class DescriptionNewProductFragment: Fragment() {
 
@@ -72,6 +76,26 @@ class DescriptionNewProductFragment: Fragment() {
                         viewModel.changeDateProduct(dateFormat)
                     }
                 }.show(childFragmentManager, null)
+        }
+
+        binding.newColor.setOnClickListener{
+            ColorPickerDialogBuilder
+                .with(context)
+                .setTitle("Escolha a cor que terá o produto")
+                .initialColor(Color.RED)
+                .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
+                .density(12)
+                .setPositiveButton(
+                    "Ok"
+                ) { dialog, selectedColor, allColors ->
+                    binding.newColor.setCardBackgroundColor(selectedColor)
+                    viewModel.changeColorProduct(selectedColor)
+                }
+                .setNegativeButton(
+                    "Cancelar"
+                ) { dialog, which -> }
+                .build()
+                .show()
         }
 
         binding.registrationNewApplyConfirm.setOnClickListener {

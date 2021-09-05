@@ -11,7 +11,7 @@ import com.example.iwallet.databinding.FragmentOnbordingBinding
 import com.example.iwallet.features.intro.repository.OnbordingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OnbordingFragment: Fragment() {
+class OnbordingFragment : Fragment() {
 
     private var _binding: FragmentOnbordingBinding? = null
     private val binding: FragmentOnbordingBinding get() = _binding!!
@@ -30,15 +30,19 @@ class OnbordingFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginStart.setOnClickListener {
-            viewModel.onClickedLoginStart()
+            viewModel.onClickedLoginOrRegistrationStart(LOGIN_CODE)
         }
 
-        binding.registration.setOnClickListener{
-            findNavController().navigate(R.id.action_onbordingFragment_to_registrationFragment)
+        binding.registration.setOnClickListener {
+            viewModel.onClickedLoginOrRegistrationStart(REGISTRATION_CODE)
         }
 
         viewModel.goToLogin.observe(viewLifecycleOwner, {
             findNavController().navigate(R.id.action_onbordingFragment_to_loginFragment)
+        })
+
+        viewModel.goToRegistration.observe(viewLifecycleOwner, {
+            findNavController().navigate(R.id.action_onbordingFragment_to_registrationFragment)
         })
 
     }
@@ -46,5 +50,10 @@ class OnbordingFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val LOGIN_CODE = 0
+        const val REGISTRATION_CODE = 1
     }
 }

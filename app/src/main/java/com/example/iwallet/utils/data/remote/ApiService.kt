@@ -15,7 +15,7 @@ interface ApiService {
         @Query("apiKey") apiKey: String
     ): Response<News>
 
-    companion object{
+    companion object {
         fun getEndPointInstance(): ApiService {
             return Retrofit.Builder()
                 .baseUrl("https://newsapi.org/v2/")

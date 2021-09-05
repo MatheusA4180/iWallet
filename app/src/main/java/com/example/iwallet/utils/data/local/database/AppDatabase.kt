@@ -7,7 +7,11 @@ import androidx.room.RoomDatabase
 import com.example.iwallet.utils.model.resume.ProductEntity
 import com.example.iwallet.utils.model.wallet.ExtractEntity
 
-@Database(entities = [ProductEntity::class,ExtractEntity::class], version = 1, exportSchema = false)
+@Database(
+    entities = [ProductEntity::class, ExtractEntity::class],
+    version = 1,
+    exportSchema = false
+)
 
 abstract class AppDatabase : RoomDatabase() {
 

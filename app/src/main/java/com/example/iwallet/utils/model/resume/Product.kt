@@ -7,5 +7,6 @@ data class Product(
     var price: String = "0.0",
     var quantity: String = "0",
     var date: String = "",
-    var rate: String = "0.0"
+    var rate: String = "0.0",
+    var color: String = ""
 )

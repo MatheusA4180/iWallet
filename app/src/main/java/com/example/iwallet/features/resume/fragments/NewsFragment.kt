@@ -22,7 +22,7 @@ class NewsFragment: Fragment() {
     private var _binding: FragmentNewsBinding? = null
     private val binding: FragmentNewsBinding get() = _binding!!
     private val viewModel: NewsViewModel by viewModel()
-    private lateinit var listNews: News
+    private var listNews: News? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +48,7 @@ class NewsFragment: Fragment() {
         })
 
         binding.cardNews.setOnClickListener {
-            openWebPage(listNews.articles[position].url)
+            openWebPage(listNews!!.articles[position].url)
         }
 
         viewModel.responseErro.observe(viewLifecycleOwner,{

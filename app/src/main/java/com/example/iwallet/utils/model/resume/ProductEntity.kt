@@ -11,8 +11,9 @@ data class ProductEntity(
     val price: String = "",
     val quantity: String = "",
     val date: String = "",
-    val rate: String = ""
-){
+    val rate: String = "",
+    var color: String = ""
+) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 

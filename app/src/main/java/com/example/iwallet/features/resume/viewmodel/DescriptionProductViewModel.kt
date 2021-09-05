@@ -51,6 +51,10 @@ class DescriptionProductViewModel(
         product.rate = rate
     }
 
+    fun changeColorProduct(selectedColor: Int) {
+        product.color = selectedColor.toString()
+    }
+
     fun deleteProduct(nameProduct: String) {
         viewModelScope.launch {
             descriptionProductRepository.deleteProduct(nameProduct)

@@ -11,11 +11,11 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginRepository: LoginRepository
-): ViewModel() {
+) : ViewModel() {
 
-    private var email:String? = null
-    private var password:String? = null
-    private var onChecked:Boolean = false
+    private var email: String? = null
+    private var password: String? = null
+    private var onChecked: Boolean = false
 
     private val _goToHome = SingleLiveEvent<Unit>()
     val goToHome: LiveData<Unit> = _goToHome
@@ -65,21 +65,22 @@ class LoginViewModel(
         viewModelScope.launch {
             _showLoading.postValue(true)
             delay(1500L)
-            if(email==loginRepository.getSaveEmailUserRegistration()
-                && password==loginRepository.getSavePasswordUserRegistration()){
+            if (email == loginRepository.getSaveEmailUserRegistration()
+                && password == loginRepository.getSavePasswordUserRegistration()
+            ) {
                 _goToHome.postValue(Unit)
-            }else{
+            } else {
                 _showErro.postValue("Usuario Invalido")
             }
             _showLoading.postValue(false)
         }
     }
 
-    fun onRememberChecked(isChecked:Boolean) {
-        if(isChecked) {
+    fun onRememberChecked(isChecked: Boolean) {
+        if (isChecked) {
             this.onChecked = true
             saveLogin()
-        }else{
+        } else {
             this.onChecked = false
             deleteLogin()
         }
@@ -93,7 +94,7 @@ class LoginViewModel(
         loginRepository.deleteUserLogin()
     }
 
-    fun getEmailAndPassword(){
+    fun getEmailAndPassword() {
         _emailSave.postValue(loginRepository.getUserEmail())
         _passwordSave.postValue(loginRepository.getUserPassword())
     }

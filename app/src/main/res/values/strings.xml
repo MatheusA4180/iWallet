@@ -4,4 +4,6 @@
     <string name="preference_file_key">preferece_key</string>
     <string name="title_activity_home">home</string>
     <string name="title_date_picker">Selecione a data</string>
+    <string name="title_tab_layout_wallet_2">Extrato</string>
+    <string name="title_tab_layout_wallet_1">Produtos</string>
 </resources>

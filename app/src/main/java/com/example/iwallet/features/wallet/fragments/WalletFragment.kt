@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentWalletBinding
 import com.example.iwallet.features.wallet.adapter.ViewPagerWalletAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
-class WalletFragment: Fragment() {
+class WalletFragment : Fragment() {
 
     private var _binding: FragmentWalletBinding? = null
     private val binding: FragmentWalletBinding get() = _binding!!
-    //private val viewModel: WalletViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,10 +42,10 @@ class WalletFragment: Fragment() {
         ) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Produtos"
+                    tab.text = getString(R.string.title_tab_layout_wallet_1)
                 }
                 1 -> {
-                    tab.text = "Extrato"
+                    tab.text = getString(R.string.title_tab_layout_wallet_2)
                 }
             }
         }.attach()
@@ -55,4 +55,5 @@ class WalletFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

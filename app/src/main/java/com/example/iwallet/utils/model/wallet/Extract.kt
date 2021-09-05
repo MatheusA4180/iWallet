@@ -1,6 +1,6 @@
 package com.example.iwallet.utils.model.wallet
 
-class Extract(
+data class Extract(
     var broker: String = "",
     var name: String = "",
     var category: String = "",

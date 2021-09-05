@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iwallet.R
 import com.example.iwallet.utils.model.resume.Product
 
 class ListProductsAdapter(
     private val listProducts: List<Product>,
-    private val clickedProductListener: ClickedProductListener
+    private val clickedProductListener: ClickedProductListener,
+    private val toolbarEnable: Boolean
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = listProducts.size
@@ -32,12 +34,22 @@ class ListProductsAdapter(
             val balance = listProducts[position].quantity.toDouble() * listProducts[position].price.toDouble()
             holder.balanceProduct.text =
                 "R$ ${balance.toString().replace(".", ",")}"
+            holder.nameBroker.setTextColor(listProducts[position].color.toInt())
+            holder.nameProduct.setTextColor(listProducts[position].color.toInt())
+            holder.categoryProduct.setTextColor(listProducts[position].color.toInt())
+            holder.balanceProduct.setTextColor(listProducts[position].color.toInt())
+            holder.profitability.setTextColor(listProducts[position].color.toInt())
+            holder.bannerProduct.setCardBackgroundColor(listProducts[position].color.toInt())
+
             holder.itemView.setOnClickListener {
-                clickedProductListener.clickProductListener(
-                    listProducts[position].broker,
-                    listProducts[position].name,
-                    listProducts[position].category
-                )
+                if(toolbarEnable){
+                    clickedProductListener.clickProductListener(
+                        listProducts[position].broker,
+                        listProducts[position].name,
+                        listProducts[position].category,
+                        listProducts[position].color
+                    )
+                }
             }
         }
     }
@@ -48,13 +60,15 @@ class ListProductsAdapter(
         val categoryProduct: TextView = itemView.findViewById(R.id.category_product)
         val profitability: TextView = itemView.findViewById(R.id.profitability)
         val balanceProduct: TextView = itemView.findViewById(R.id.balance_product)
+        val bannerProduct: CardView = itemView.findViewById(R.id.banner)
     }
 
     interface ClickedProductListener {
         fun clickProductListener(
             nameBroker: String,
             nameProduct: String,
-            category : String
+            category : String,
+            color: String
         )
     }
 

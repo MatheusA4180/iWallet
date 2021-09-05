@@ -14,10 +14,8 @@ import com.example.iwallet.databinding.FragmentSplashBinding
 import com.example.iwallet.features.intro.viewmodel.SplashViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+class SplashFragment : Fragment() {
 
-class SplashFragment: Fragment() {
-
-    private val SPLASH_DELAY: Long = 3000
     private var _binding: FragmentSplashBinding? = null
     private val binding: FragmentSplashBinding get() = _binding!!
     private val viewModel: SplashViewModel by viewModel()
@@ -57,4 +55,9 @@ class SplashFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    companion object {
+        private const val SPLASH_DELAY: Long = 3000
+    }
+
 }

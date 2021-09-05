@@ -40,6 +40,10 @@ class DescriptionNewProductViewModel(
         product.rate = rate
     }
 
+    fun changeColorProduct(selectedColor: Int) {
+        product.color = selectedColor.toString()
+    }
+
     fun applyRegisterProduct(){
         viewModelScope.launch {
             descriptionNewProductRepository.applyRegisterProductInDatabase(product)

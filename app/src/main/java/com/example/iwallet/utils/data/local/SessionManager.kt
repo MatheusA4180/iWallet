@@ -40,13 +40,15 @@ class SessionManager(private val preferences: SharedPreferences) {
 
     fun getSaveEmailUserRegistration(): String = preferences.getString(USER_REGISTRATION, "")!!
 
-    fun getSavePasswordUserRegistration(): String = preferences.getString(PASSWORD_REGISTRATION, "")!!
+    fun getSavePasswordUserRegistration(): String =
+        preferences.getString(PASSWORD_REGISTRATION, "")!!
 
-    companion object{
+    companion object {
         private const val PASS_TO_ONBOARDING = "Passou"
         private const val USER = "Username"
         private const val PASSWORD = "Password"
         private const val USER_REGISTRATION = "user registration"
         private const val PASSWORD_REGISTRATION = "password registration"
     }
+
 }

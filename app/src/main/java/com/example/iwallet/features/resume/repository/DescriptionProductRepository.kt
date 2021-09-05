@@ -16,22 +16,35 @@ class DescriptionProductRepository(
 
     suspend fun registerUpdateProduct(productNew: Product,buttonPressed: String) {
         withContext(Dispatchers.IO){
-            saveExtract(productNew,buttonPressed)
             val productOld = productDAO.searchProduct(productNew.name)
-            if(buttonPressed == APPLICATION){
+            if(productNew.price.isEmpty() || productNew.quantity.isEmpty() || productNew.rate.isEmpty()){
                 productDAO.updateProduct(
                     productOld.name,
-                    calcNewPriceApplication(productOld,productNew),
-                    calcNewQuantityApplication(productOld,productNew),
-                    calcNewRateApplication(productOld,productNew)
+                    productOld.price,
+                    productOld.quantity,
+                    productOld.rate,
+                    productNew.color
                 )
             }else{
-                productDAO.updateProduct(
-                    productOld.name,
-                    calcNewPriceRescue(productOld,productNew),
-                    calcNewQuantityRescue(productOld,productNew),
-                    calcNewRateRescue(productOld,productNew)
-                )
+                if(buttonPressed == APPLICATION){
+                    saveExtract(productNew,buttonPressed)
+                    productDAO.updateProduct(
+                        productOld.name,
+                        calcNewPriceApplication(productOld,productNew),
+                        calcNewQuantityApplication(productOld,productNew),
+                        calcNewRateApplication(productOld,productNew),
+                        productNew.color
+                    )
+                }else{
+                    saveExtract(productNew,buttonPressed)
+                    productDAO.updateProduct(
+                        productOld.name,
+                        calcNewPriceRescue(productOld,productNew),
+                        calcNewQuantityRescue(productOld,productNew),
+                        calcNewRateRescue(productOld,productNew),
+                        productNew.color
+                    )
+                }
             }
         }
     }

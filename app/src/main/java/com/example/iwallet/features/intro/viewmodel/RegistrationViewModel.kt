@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class RegistrationViewModel(
     private val registrationRepository: RegistrationRepository
-): ViewModel() {
+) : ViewModel() {
 
     private var email: String? = null
     private var password: String? = null

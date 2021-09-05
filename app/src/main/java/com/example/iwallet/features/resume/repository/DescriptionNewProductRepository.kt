@@ -25,7 +25,8 @@ class DescriptionNewProductRepository(
                     product.price,
                     product.quantity,
                     product.date,
-                    product.rate
+                    product.rate,
+                    product.color
                 )
             )
         }

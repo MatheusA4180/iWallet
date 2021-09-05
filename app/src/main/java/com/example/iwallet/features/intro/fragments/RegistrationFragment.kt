@@ -10,18 +10,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
-import com.example.iwallet.databinding.FragmentLoginBinding
 import com.example.iwallet.databinding.FragmentRegistrationBinding
-import com.example.iwallet.features.intro.viewmodel.LoginViewModel
 import com.example.iwallet.features.intro.viewmodel.RegistrationViewModel
-import com.example.iwallet.utils.model.intro.UserId
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class RegistrationFragment: Fragment() {
+class RegistrationFragment : Fragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
     private val binding: FragmentRegistrationBinding get() = _binding!!
@@ -41,6 +36,10 @@ class RegistrationFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.registrationCancel.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.registrationEmail.addTextChangedListener {
             viewModel.onEmailChange(it.toString())
         }
@@ -57,11 +56,7 @@ class RegistrationFragment: Fragment() {
             viewModel.onClickRegistrationConfirm()
         }
 
-        binding.registrationCancel.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        viewModel.registratioUser.observe(viewLifecycleOwner,{
+        viewModel.registratioUser.observe(viewLifecycleOwner, {
         })
 
         viewModel.goToLogin.observe(viewLifecycleOwner, {
@@ -72,7 +67,7 @@ class RegistrationFragment: Fragment() {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
 
-        viewModel.showLoading.observe(viewLifecycleOwner,{
+        viewModel.showLoading.observe(viewLifecycleOwner, {
             binding.progressCircular.isVisible = it
         })
 

@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.iwallet.databinding.FragmentExtractBinding
-import com.example.iwallet.databinding.FragmentWalletBinding
 import com.example.iwallet.features.wallet.adapter.ListExtractAdapter
 import com.example.iwallet.features.wallet.viewmodel.ExtractViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ExtractFragment: Fragment() {
+class ExtractFragment : Fragment() {
 
     private var _binding: FragmentExtractBinding? = null
     private val binding: FragmentExtractBinding get() = _binding!!
@@ -30,8 +29,8 @@ class ExtractFragment: Fragment() {
 
         viewModel.requestListExtracts()
 
-        viewModel.listExtracts.observe(viewLifecycleOwner,{
-            binding.listExtract.adapter = ListExtractAdapter(it,requireContext())
+        viewModel.listExtracts.observe(viewLifecycleOwner, {
+            binding.listExtract.adapter = ListExtractAdapter(it, requireContext())
         })
 
     }
@@ -40,4 +39,5 @@ class ExtractFragment: Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
