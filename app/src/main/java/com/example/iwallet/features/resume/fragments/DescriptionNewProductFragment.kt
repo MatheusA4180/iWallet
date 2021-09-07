@@ -61,10 +61,6 @@ class DescriptionNewProductFragment: Fragment() {
             viewModel.changeQuantityProduct(it.toString())
         }
 
-        binding.newRate.addTextChangedListener {
-            viewModel.changeRateProduct(it.toString())
-        }
-
         binding.newDateCard.setOnClickListener {
             MaterialDatePicker.Builder.datePicker().setTitleText(getString(R.string.title_date_picker))
                 .build().apply {

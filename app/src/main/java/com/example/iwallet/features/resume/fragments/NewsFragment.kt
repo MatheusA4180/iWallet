@@ -35,7 +35,7 @@ class NewsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        viewModel.requestNews()
+        //viewModel.requestNews()
 
         var position = requireArguments().getInt(POSITION_VIEW_PAGER_NEWS)
 

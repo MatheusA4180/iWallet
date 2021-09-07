@@ -1,10 +1,12 @@
 package com.example.iwallet.features.intro.repository
 
-import com.example.iwallet.utils.data.local.SessionManager
+import com.example.iwallet.utils.model.intro.User
+import com.google.firebase.auth.FirebaseAuth
 
-class RegistrationRepository(private val sessionManager: SessionManager) {
+class RegistrationRepository() {
 
-    fun saveUserRegistration(email: String, password: String) =
-        sessionManager.saveUserRegistration(email, password)
+    fun signUpInFirebase(user: User) {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email,user.password)
+    }
 
 }

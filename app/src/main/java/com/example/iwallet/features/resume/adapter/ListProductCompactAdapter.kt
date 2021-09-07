@@ -26,9 +26,8 @@ class ListProductCompactAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductCompactViewHolder) {
             holder.textProduct.text = listProductsCompact[position].name
-            val balance = listProductsCompact[position].quantity.toDouble()* listProductsCompact[position].price.toDouble()
-            holder.textBalance.text = converterToReal(balance)
-            holder.textPartOfTotal.text = listProductsCompact[position].rate
+            holder.textBalance.text = converterToReal(listProductsCompact[position].total.toDouble())
+            holder.textPartOfTotal.text = "${listProductsCompact[position].rate.toDouble().toString().replace(".",",")} %"
             holder.textCategory.text = listProductsCompact[position].category
             holder.bannerProduct.setBackgroundColor(listProductsCompact[position].color.toInt())
             holder.textProduct.setTextColor(listProductsCompact[position].color.toInt())

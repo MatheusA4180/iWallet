@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.iwallet.databinding.FragmentMoneyManagerBinding
 
-class MoneyManagerFragment: Fragment() {
+class MoneyManagerFragment : Fragment() {
 
     private var _binding: FragmentMoneyManagerBinding? = null
     private val binding: FragmentMoneyManagerBinding get() = _binding!!
-    //private val viewModel: MoneyManagerViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

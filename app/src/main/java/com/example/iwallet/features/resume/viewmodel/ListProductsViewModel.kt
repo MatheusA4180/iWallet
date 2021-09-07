@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.iwallet.features.resume.repository.AddOrSubtractProductRepository
+import com.example.iwallet.features.resume.repository.ListProductsRepository
 import com.example.iwallet.utils.model.resume.Product
 import kotlinx.coroutines.launch
 
-class AddOrSubtractProductViewModel(
-    private val addOrSubtractProductRepository: AddOrSubtractProductRepository
+class ListProductsViewModel(
+    private val listProductsRepository: ListProductsRepository
 ): ViewModel() {
 
     private val _listProducts = MutableLiveData<List<Product>>()
@@ -17,7 +17,7 @@ class AddOrSubtractProductViewModel(
 
     fun requestListProducts(){
         viewModelScope.launch {
-            _listProducts.postValue(addOrSubtractProductRepository.returnListProducts())
+            _listProducts.postValue(listProductsRepository.returnListProducts())
         }
     }
 

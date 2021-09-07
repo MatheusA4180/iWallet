@@ -4,7 +4,6 @@ import com.example.iwallet.features.resume.fragments.DescriptionProductFragment.
 import com.example.iwallet.utils.data.local.database.ExtractDAO
 import com.example.iwallet.utils.data.local.database.ProductDAO
 import com.example.iwallet.utils.model.resume.Product
-import com.example.iwallet.utils.model.resume.ProductEntity
 import com.example.iwallet.utils.model.wallet.ExtractEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,51 +11,43 @@ import kotlinx.coroutines.withContext
 class DescriptionProductRepository(
     private val productDAO: ProductDAO,
     private val extractDAO: ExtractDAO
-    ) {
+) {
 
-    suspend fun registerUpdateProduct(productNew: Product,buttonPressed: String) {
-        withContext(Dispatchers.IO){
+    suspend fun registerUpdateProduct(productNew: Product, buttonPressed: String) {
+        withContext(Dispatchers.IO) {
             val productOld = productDAO.searchProduct(productNew.name)
-            if(productNew.price.isEmpty() || productNew.quantity.isEmpty() || productNew.rate.isEmpty()){
+            if (buttonPressed == APPLICATION) {
+                saveExtract(productNew, buttonPressed)
                 productDAO.updateProduct(
                     productOld.name,
-                    productOld.price,
-                    productOld.quantity,
-                    productOld.rate,
+                    calcNewPriceApplication(productOld, productNew),
+                    calcNewQuantityApplication(productOld, productNew),
+                    calcNewTotalApplication(productOld, productNew),
                     productNew.color
                 )
-            }else{
-                if(buttonPressed == APPLICATION){
-                    saveExtract(productNew,buttonPressed)
-                    productDAO.updateProduct(
-                        productOld.name,
-                        calcNewPriceApplication(productOld,productNew),
-                        calcNewQuantityApplication(productOld,productNew),
-                        calcNewRateApplication(productOld,productNew),
-                        productNew.color
-                    )
-                }else{
-                    saveExtract(productNew,buttonPressed)
-                    productDAO.updateProduct(
-                        productOld.name,
-                        calcNewPriceRescue(productOld,productNew),
-                        calcNewQuantityRescue(productOld,productNew),
-                        calcNewRateRescue(productOld,productNew),
-                        productNew.color
-                    )
-                }
+                mapForPartOfWallet()
+            } else {
+                saveExtract(productNew, buttonPressed)
+                productDAO.updateProduct(
+                    productOld.name,
+                    calcNewPriceRescue(productOld, productNew),
+                    calcNewQuantityRescue(productOld, productNew),
+                    calcNewTotalRescue(productOld, productNew),
+                    productNew.color
+                )
+                mapForPartOfWallet()
             }
         }
     }
 
     private suspend fun saveExtract(productNew: Product, buttonPressed: String) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             extractDAO.saveExtract(
                 ExtractEntity(
                     productNew.broker,
                     productNew.name,
                     productNew.category,
-                    (productNew.price.toDouble() * productNew.quantity.toDouble()).toString(),
+                    productNew.total,
                     productNew.date,
                     buttonPressed
                 )
@@ -64,40 +55,60 @@ class DescriptionProductRepository(
         }
     }
 
-    private fun calcNewRateRescue(productOld: Product, productNew: Product): String {
-        return productNew.rate
+    suspend fun deleteProduct(nameProduct: String) {
+        withContext(Dispatchers.IO) {
+            productDAO.deleteProduct(nameProduct)
+            mapForPartOfWallet()
+        }
     }
 
-    private fun calcNewQuantityRescue(productOld: Product, productNew: Product): String {
-        return (productOld.quantity.toDouble() - productNew.quantity.toDouble()).toString()
+    private suspend fun mapForPartOfWallet() {
+        withContext(Dispatchers.IO) {
+            var total = 0.0
+            val listProducts = productDAO.returnListProduct()
+            listProducts.forEach { product ->
+                total += product.total.toDouble()
+            }
+            listProducts.forEach { product ->
+                updateRate(product.name,String
+                    .format("%.2f", ((product.total.toDouble() / total)*100) ).toDouble() )
+            }
+        }
     }
 
-    private fun calcNewPriceRescue(productOld: Product, productNew: Product): String {
-        val n1 = productNew.price.toDouble() * productNew.quantity.toDouble()
-        val n2 = productOld.price.toDouble() * productOld.quantity.toDouble()
-        val n3 = productOld.quantity.toDouble() - productNew.quantity.toDouble()
-        return ((n2-n1)/n3).toString()
+    private suspend fun updateRate(nameProduct: String, rateProduct: Double) {
+        withContext(Dispatchers.IO) {
+            productDAO.updateRate(
+                nameProduct,
+                rateProduct.toString()
+            )
+        }
     }
 
-    private fun calcNewRateApplication(productOld: Product, productNew: Product): String {
-        return productNew.rate
+    private fun calcNewTotalApplication(productOld: Product, productNew: Product): String {
+        return (productNew.total.toDouble() + productOld.total.toDouble()).toString()
+    }
+
+    private fun calcNewTotalRescue(productOld: Product, productNew: Product): String {
+        return (productOld.total.toDouble() - productNew.total.toDouble()).toString()
     }
 
     private fun calcNewQuantityApplication(productOld: Product, productNew: Product): String {
         return (productNew.quantity.toDouble() + productOld.quantity.toDouble()).toString()
     }
 
-    private fun calcNewPriceApplication(productOld: Product, productNew: Product): String {
-        val n1 = productNew.price.toDouble() * productNew.quantity.toDouble()
-        val n2 = productOld.price.toDouble() * productOld.quantity.toDouble()
-        val n3 = productNew.quantity.toDouble() + productOld.quantity.toDouble()
-        return ((n1+n2)/n3).toString()
+    private fun calcNewQuantityRescue(productOld: Product, productNew: Product): String {
+        return (productOld.quantity.toDouble() - productNew.quantity.toDouble()).toString()
     }
 
-    suspend fun deleteProduct(nameProduct: String) {
-        withContext(Dispatchers.IO){
-            productDAO.deleteProduct(nameProduct)
-        }
+    private fun calcNewPriceApplication(productOld: Product, productNew: Product): String {
+        val denominator = calcNewQuantityApplication(productOld, productNew).toDouble()
+        return ((productNew.total.toDouble() + productOld.total.toDouble()) / denominator).toString()
+    }
+
+    private fun calcNewPriceRescue(productOld: Product, productNew: Product): String {
+        val denominator = calcNewQuantityRescue(productOld, productNew).toDouble()
+        return ((productOld.total.toDouble() - productNew.total.toDouble()) / denominator).toString()
     }
 
 }

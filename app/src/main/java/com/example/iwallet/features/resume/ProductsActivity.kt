@@ -6,7 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navArgs
 import com.example.iwallet.R
 import com.example.iwallet.databinding.ActivityProductsBinding
-import com.example.iwallet.features.resume.fragments.ResumeFragment.Companion.ADD_OR_SUBTRACT_PRODUCT
+import com.example.iwallet.features.resume.fragments.ResumeFragment.Companion.LIST_PRODUCT
 
 class ProductsActivity : AppCompatActivity() {
 
@@ -23,7 +23,7 @@ class ProductsActivity : AppCompatActivity() {
             .findFragmentById(R.id.navHostFragmentProduct) as NavHostFragment)
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.products_nav_graph)
-        graph.startDestination = if (arguments.fragmentSelected == ADD_OR_SUBTRACT_PRODUCT) {
+        graph.startDestination = if (arguments.fragmentSelected == LIST_PRODUCT) {
             R.id.addOrSubtractProductFragment
         } else {
             R.id.newProductFragment

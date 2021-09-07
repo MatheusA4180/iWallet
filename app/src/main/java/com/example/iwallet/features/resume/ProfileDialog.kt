@@ -9,42 +9,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.iwallet.R
 import com.example.iwallet.databinding.ProfileDialogBinding
 import com.example.iwallet.features.resume.adapter.ListOptionsProfileAdapter
+import com.example.iwallet.utils.model.resume.ItemOptionProfile
 
-class ProfileDialog: DialogFragment(), ListOptionsProfileAdapter.ClickedProfileListener {
+class ProfileDialog : DialogFragment(), ListOptionsProfileAdapter.ClickedProfileListener {
 
     private var _binding: ProfileDialogBinding? = null
     private val binding: ProfileDialogBinding get() = _binding!!
-    private val listOptionsProfile: List<ListOptionsProfileAdapter.ItemOptionProfile> by lazy {
+    private val listOptionsProfile: List<ItemOptionProfile> by lazy {
         listOf(
-            ListOptionsProfileAdapter.ItemOptionProfile(
-                "Meu perfil",
+            ItemOptionProfile(
+                getString(R.string.option_menu_dialog_1),
                 R.drawable.ic_profile
             ),
-            ListOptionsProfileAdapter.ItemOptionProfile(
-                "Central de ajuda",
+            ItemOptionProfile(
+                getString(R.string.option_menu_dialog_2),
                 R.drawable.ic_help
             ),
-            ListOptionsProfileAdapter.ItemOptionProfile(
-                "Segurança",
+            ItemOptionProfile(
+                getString(R.string.option_menu_dialog_3),
                 R.drawable.ic_security
             ),
-            ListOptionsProfileAdapter.ItemOptionProfile(
-                "Sobre",
+            ItemOptionProfile(
+                getString(R.string.option_menu_dialog_4),
                 R.drawable.ic_about
             ),
-            ListOptionsProfileAdapter.ItemOptionProfile(
-                "Sair da Conta",
+            ItemOptionProfile(
+                getString(R.string.option_menu_dialog_5),
                 R.drawable.ic_exit_login
             ),
-            ListOptionsProfileAdapter.ItemOptionProfile(
-                "Excluir Conta",
+            ItemOptionProfile(
+                getString(R.string.option_menu_dialog_6),
                 R.drawable.ic_trash
             )
         )
@@ -54,7 +53,7 @@ class ProfileDialog: DialogFragment(), ListOptionsProfileAdapter.ClickedProfileL
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = ProfileDialogBinding.inflate(inflater, container, false)
         return _binding!!.root
     }
@@ -77,21 +76,39 @@ class ProfileDialog: DialogFragment(), ListOptionsProfileAdapter.ClickedProfileL
     }
 
     override fun clickProfileListener(positionRecyclerView: Int) {
-        if(positionRecyclerView == 1){
-            openWebPage("https://chat.blip.ai/?appKey=YXNzaXN0ZW50ZXZpcnR1YWx0ZWNub2Jhbms6MjEyNDY4M2QtYmMzMS00ZmUyLTlkMDQtYWRmODhmMDU4YWMx")
-        }else if (positionRecyclerView == 4) {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Deseja sair do aplicativo?")
-                .setMessage("")
-                .setNegativeButton("Não") { _, _ -> }
-                .setPositiveButton("Sim") { _, _ -> requireActivity().finish() }
-                .create()
-                .show()
+        when (positionRecyclerView) {
+            CHATBOT -> {
+                openWebPage(getString(R.string.link_chatbot))
+            }
+            ABOUT_APP -> {
+                openWebPage(getString(R.string.link_readme))
+            }
+            EXIT_APP -> {
+                AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.title_profile_dialog))
+                    .setMessage("")
+                    .setNegativeButton(
+                        getString(
+                            R.string.option_profile_dialog_1
+                        )
+                    ) { _, _ -> }
+                    .setPositiveButton(
+                        getString(R.string.option_profile_dialog_2)
+                    ) { _, _ -> requireActivity().finish() }
+                    .create()
+                    .show()
+            }
         }
     }
 
     fun openWebPage(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+    }
+
+    companion object {
+        private const val CHATBOT = 1
+        private const val ABOUT_APP = 3
+        private const val EXIT_APP = 4
     }
 
 }

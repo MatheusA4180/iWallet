@@ -1,6 +1,7 @@
 package com.example.iwallet.features.intro.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +13,17 @@ import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentRegistrationBinding
 import com.example.iwallet.features.intro.viewmodel.RegistrationViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class RegistrationFragment : Fragment() {
 
     private var _binding: FragmentRegistrationBinding? = null
     private val binding: FragmentRegistrationBinding get() = _binding!!
     private val viewModel: RegistrationViewModel by viewModel()
-    private var auth = Firebase.auth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,9 +57,6 @@ class RegistrationFragment : Fragment() {
         binding.registrationConfirm.setOnClickListener {
             viewModel.onClickRegistrationConfirm()
         }
-
-        viewModel.registratioUser.observe(viewLifecycleOwner, {
-        })
 
         viewModel.goToLogin.observe(viewLifecycleOwner, {
             findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)

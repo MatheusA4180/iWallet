@@ -9,7 +9,7 @@
         android:id="@+id/addOrSubtractProductFragment"
         android:name="com.example.iwallet.features.resume.fragments.ListProductsFragment"
         android:label="AddOrSubtractProductFragment"
-        tools:layout="@layout/fragment_add_or_subtract_product">
+        tools:layout="@layout/fragment_list_products">
         <action
             android:id="@+id/action_addOrSubtractProductFragment_to_descriptionProductFragment"
             app:destination="@id/descriptionProductFragment" />

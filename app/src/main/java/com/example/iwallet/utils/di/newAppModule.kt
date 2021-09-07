@@ -51,7 +51,7 @@ val newAppModule = module {
     }
 
     viewModel {
-        AddOrSubtractProductViewModel(get())
+        ListProductsViewModel(get())
     }
 
     viewModel {
@@ -75,7 +75,7 @@ val newAppModule = module {
     }
 
     factory {
-        RegistrationRepository(get())
+        RegistrationRepository()
     }
 
     factory {
@@ -91,7 +91,7 @@ val newAppModule = module {
     }
 
     factory {
-        AddOrSubtractProductRepository(get())
+        ListProductsRepository(get())
     }
 
     factory {

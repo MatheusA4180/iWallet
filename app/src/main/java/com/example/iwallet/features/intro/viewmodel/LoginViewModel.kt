@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.intro.repository.LoginRepository
 import com.example.iwallet.utils.model.SingleLiveEvent
+import com.example.iwallet.utils.model.intro.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -64,13 +65,11 @@ class LoginViewModel(
     private fun login() {
         viewModelScope.launch {
             _showLoading.postValue(true)
-            delay(1500L)
-            if (email == loginRepository.getSaveEmailUserRegistration()
-                && password == loginRepository.getSavePasswordUserRegistration()
-            ) {
+            try{
+                loginRepository.loginInFirebase(User(email!!,password!!))
                 _goToHome.postValue(Unit)
-            } else {
-                _showErro.postValue("Usuario Invalido")
+            }catch (e:Exception){
+                _showErro.postValue("erro no sistema")
             }
             _showLoading.postValue(false)
         }

@@ -6,7 +6,7 @@ import com.example.iwallet.utils.model.resume.ProductEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AddOrSubtractProductRepository(
+class ListProductsRepository(
     private val productDAO: ProductDAO
 ) {
 

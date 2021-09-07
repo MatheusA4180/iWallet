@@ -22,13 +22,19 @@ interface ProductDAO {
     @Query("DELETE FROM ProductEntity WHERE name= :nameProduct")
     fun deleteProduct(nameProduct: String)
 
-    @Query("UPDATE ProductEntity SET price=:newPrice,quantity=:newQuantity,rate=:newRate,color=:newColor  WHERE name= :nameProduct")
+    @Query("UPDATE ProductEntity SET price=:newPrice,quantity=:newQuantity,total=:newTotal,color=:newColor  WHERE name= :nameProduct")
     fun updateProduct(
         nameProduct: String,
         newPrice: String,
         newQuantity: String,
-        newRate: String,
+        newTotal: String,
         newColor: String
+    )
+
+    @Query("UPDATE ProductEntity SET rate=:newRate WHERE name= :nameProduct")
+    fun updateRate(
+        nameProduct: String,
+        newRate: String
     )
 
 }

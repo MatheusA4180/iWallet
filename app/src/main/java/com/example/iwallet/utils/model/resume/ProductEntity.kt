@@ -10,6 +10,7 @@ data class ProductEntity(
     val category: String = "",
     val price: String = "",
     val quantity: String = "",
+    val total: String = "",
     val date: String = "",
     val rate: String = "",
     var color: String = ""

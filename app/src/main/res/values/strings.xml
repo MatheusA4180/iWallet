@@ -6,4 +6,15 @@
     <string name="title_date_picker">Selecione a data</string>
     <string name="title_tab_layout_wallet_2">Extrato</string>
     <string name="title_tab_layout_wallet_1">Produtos</string>
+    <string name="title_profile_dialog">Deseja sair do aplicativo?</string>
+    <string name="option_profile_dialog_1">Não</string>
+    <string name="option_profile_dialog_2">Sim</string>
+    <string name="link_chatbot">https://chat.blip.ai/?appKey=YXNzaXN0ZW50ZXZpcnR1YWx0ZWNub2Jhbms6MjEyNDY4M2QtYmMzMS00ZmUyLTlkMDQtYWRmODhmMDU4YWMx</string>
+    <string name="option_menu_dialog_1">Meu perfil</string>
+    <string name="option_menu_dialog_2">Central de ajuda</string>
+    <string name="option_menu_dialog_3">Segurança</string>
+    <string name="option_menu_dialog_4">Sobre</string>
+    <string name="option_menu_dialog_5">Sair da Conta</string>
+    <string name="option_menu_dialog_6">Excluir Conta</string>
+    <string name="link_readme">https://github.com/MatheusA4180/iWallet---Compasso-UOL</string>
 </resources>

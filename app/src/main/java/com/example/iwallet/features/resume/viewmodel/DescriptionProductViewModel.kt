@@ -47,10 +47,6 @@ class DescriptionProductViewModel(
         product.date = date
     }
 
-    fun changeRateProduct(rate: String) {
-        product.rate = rate
-    }
-
     fun changeColorProduct(selectedColor: Int) {
         product.color = selectedColor.toString()
     }
@@ -63,6 +59,7 @@ class DescriptionProductViewModel(
 
     fun applyRegisterUpdateProduct(){
         viewModelScope.launch {
+            product.total = (product.quantity.toDouble() * product.price.toDouble()).toString()
             descriptionProductRepository.registerUpdateProduct(product,buttonPressed)
         }
     }

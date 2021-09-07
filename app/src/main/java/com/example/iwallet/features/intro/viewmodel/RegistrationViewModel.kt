@@ -8,6 +8,7 @@ import com.example.iwallet.features.intro.repository.RegistrationRepository
 import com.example.iwallet.utils.model.intro.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class RegistrationViewModel(
     private val registrationRepository: RegistrationRepository
@@ -25,9 +26,6 @@ class RegistrationViewModel(
 
     private val _showLoading = MutableLiveData<Boolean>()
     val showLoading: LiveData<Boolean> = _showLoading
-
-    private val _registratioUser = MutableLiveData<User>()
-    val registratioUser: LiveData<User> = _registratioUser
 
     fun onEmailChange(email: String): String {
         this.email = email
@@ -53,6 +51,9 @@ class RegistrationViewModel(
                 password.isNullOrBlank() -> {
                     _showErro.postValue("Senha não preenchida!")
                 }
+                password!!.length < 6 -> {
+                    _showErro.postValue("A senha deve ter mais de 6 caracteres !")
+                }
                 confirmPassword.isNullOrBlank() -> {
                     _showErro.postValue("Senha de confirmação não preenchida!")
                 }
@@ -60,9 +61,14 @@ class RegistrationViewModel(
                     _showErro.postValue("As senhas preechidas são diferentes")
                 }
                 else -> {
-                    //_registratioUser.postValue(User(email!!, password!!))
-                    registrationRepository.saveUserRegistration(email!!, password!!)
-                    _goToLogin.postValue(Unit)
+                    _showLoading.postValue(true)
+                    try{
+                        registrationRepository.signUpInFirebase(User(email!!, password!!))
+                        _goToLogin.postValue(Unit)
+                    }catch (e:Exception){
+                        _showErro.postValue("erro no sistema")
+                    }
+                    _showLoading.postValue(false)
                 }
             }
             _showLoading.postValue(false)

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iwallet.R
+import com.example.iwallet.utils.helperfunctions.HelperFunctions.converterToReal
 import com.example.iwallet.utils.model.resume.Product
 
 class ListProductsAdapter(
@@ -31,9 +32,7 @@ class ListProductsAdapter(
             holder.categoryProduct.text = listProducts[position].category
             holder.profitability.text =
                 "${listProducts[position].rate.toDouble().toString().replace(".",",")} %"
-            val balance = listProducts[position].quantity.toDouble() * listProducts[position].price.toDouble()
-            holder.balanceProduct.text =
-                "R$ ${balance.toString().replace(".", ",")}"
+            holder.balanceProduct.text = converterToReal(listProducts[position].total.toDouble())
             holder.nameBroker.setTextColor(listProducts[position].color.toInt())
             holder.nameProduct.setTextColor(listProducts[position].color.toInt())
             holder.categoryProduct.setTextColor(listProducts[position].color.toInt())

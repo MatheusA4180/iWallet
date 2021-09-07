@@ -1,6 +1,8 @@
 package com.example.iwallet.features.intro.repository
 
 import com.example.iwallet.utils.data.local.SessionManager
+import com.example.iwallet.utils.model.intro.User
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginRepository(private val sessionManager: SessionManager) {
 
@@ -13,8 +15,8 @@ class LoginRepository(private val sessionManager: SessionManager) {
 
     fun getUserPassword(): String = sessionManager.getUserPassword()
 
-    fun getSaveEmailUserRegistration(): String = sessionManager.getSaveEmailUserRegistration()
-
-    fun getSavePasswordUserRegistration(): String = sessionManager.getSavePasswordUserRegistration()
+    fun loginInFirebase(user: User) {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email,user.password)
+    }
 
 }
