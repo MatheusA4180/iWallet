@@ -1,5 +1,6 @@
 package com.example.iwallet.features.resume.viewmodel
 
+import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,11 +56,12 @@ class ResumeViewModel(
 
             listProductsResponse.forEachIndexed{ index, product ->
                 productsTotal[product.name] = product.total.toDouble().toInt()
-                if (index != listProductsResponse.size-1) {
-                    colors.add(listProductsResponse[index + 1].color.toInt())
-                } else {
-                    colors.add(listProductsResponse[0].color.toInt())
-                }
+                colors.add(product.color.toInt())
+//                if (index != listProductsResponse.size-1) {
+//                    colors.add(listProductsResponse[index + 1].color.toInt())
+//                } else {
+//                    colors.add(listProductsResponse[0].color.toInt())
+//                }
             }
 
             for (type in productsTotal.keys) {

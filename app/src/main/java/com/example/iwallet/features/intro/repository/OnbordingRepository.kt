@@ -1,4 +1,4 @@
-package com.example.iwallet.features.intro.viewmodel
+package com.example.iwallet.features.intro.repository
 
 import com.example.iwallet.utils.data.local.SessionManager
 

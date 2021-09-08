@@ -14,6 +14,7 @@ import com.example.iwallet.databinding.FragmentNewsBinding
 import com.example.iwallet.features.resume.adapter.ViewPagerNewsAdapter.Companion.POSITION_VIEW_PAGER_NEWS
 import com.example.iwallet.features.resume.viewmodel.NewsViewModel
 import com.example.iwallet.utils.model.resume.News
+import com.example.iwallet.utils.model.resume.NewsEntity
 import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,7 +23,8 @@ class NewsFragment: Fragment() {
     private var _binding: FragmentNewsBinding? = null
     private val binding: FragmentNewsBinding get() = _binding!!
     private val viewModel: NewsViewModel by viewModel()
-    private var listNews: News? = null
+    private var position = requireArguments().getInt(POSITION_VIEW_PAGER_NEWS)
+    private var listNews: List<NewsEntity> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,20 +37,18 @@ class NewsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        //viewModel.requestNews()
-
-        var position = requireArguments().getInt(POSITION_VIEW_PAGER_NEWS)
+        viewModel.requestNews()
 
         viewModel.listNews.observe(viewLifecycleOwner,{
             Picasso.with(binding.imageNew.context)
-                .load(it.articles[position].urlToImage)
+                .load(it[position].urlToImage)
                 .into(binding.imageNew)
-            binding.titleNews.text = it.articles[position].title
+            binding.titleNews.text = it[position].title
             listNews = it
         })
 
         binding.cardNews.setOnClickListener {
-            openWebPage(listNews!!.articles[position].url)
+            openWebPage(listNews[position].url)
         }
 
         viewModel.responseErro.observe(viewLifecycleOwner,{

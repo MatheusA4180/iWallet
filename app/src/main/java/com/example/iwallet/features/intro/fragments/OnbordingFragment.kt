@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentOnbordingBinding
-import com.example.iwallet.features.intro.repository.OnbordingViewModel
+import com.example.iwallet.features.intro.viewmodel.OnbordingViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class OnbordingFragment : Fragment() {

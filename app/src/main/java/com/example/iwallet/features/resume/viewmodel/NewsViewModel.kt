@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.resume.repository.NewsRepository
-import com.example.iwallet.utils.model.resume.News
+import com.example.iwallet.utils.model.resume.NewsEntity
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
@@ -18,19 +18,24 @@ class NewsViewModel(
     private val _responseErro = MutableLiveData<String>()
     val responseErro: LiveData<String> = _responseErro
 
-    private val _listNews = MutableLiveData<News>()
-    val listNews: LiveData<News> = _listNews
+    private val _listNews = MutableLiveData<List<NewsEntity>>()
+    val listNews: LiveData<List<NewsEntity>> = _listNews
 
     fun requestNews(){
         viewModelScope.launch {
-            _showLoading.postValue(true)
-            try {
-                val response = newsRepository.serchNews("criptomoedas")
-                _listNews.postValue(response)
-            } catch (e: Exception) {
-                _responseErro.postValue(e.message)
+            if(!newsRepository.savedCacheNews()){
+                _showLoading.postValue(true)
+                try {
+                    val response = newsRepository.serchNews("criptomoedas")
+                    newsRepository.saveCacheNews(true)
+                    _listNews.postValue(response)
+                } catch (e: Exception) {
+                    _responseErro.postValue(e.message)
+                }
+                _showLoading.postValue(false)
+            }else{
+                _listNews.postValue(newsRepository.returnListNewsCache())
             }
-            _showLoading.postValue(false)
         }
     }
 

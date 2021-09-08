@@ -31,24 +31,19 @@ class SessionManager(private val preferences: SharedPreferences) {
 
     fun getUserPassword(): String = preferences.getString(PASSWORD, "")!!
 
-    fun saveUserRegistration(email: String, password: String) {
+    fun saveCacheNews(save: Boolean) {
         preferences.edit {
-            putString(USER_REGISTRATION, email)
-            putString(PASSWORD_REGISTRATION, password)
+            putBoolean(CACHE_NEWS, save)
         }
     }
 
-    fun getSaveEmailUserRegistration(): String = preferences.getString(USER_REGISTRATION, "")!!
-
-    fun getSavePasswordUserRegistration(): String =
-        preferences.getString(PASSWORD_REGISTRATION, "")!!
+    fun savedCacheNews(): Boolean = preferences.getBoolean(CACHE_NEWS, false)
 
     companion object {
         private const val PASS_TO_ONBOARDING = "Passou"
         private const val USER = "Username"
         private const val PASSWORD = "Password"
-        private const val USER_REGISTRATION = "user registration"
-        private const val PASSWORD_REGISTRATION = "password registration"
+        private const val CACHE_NEWS = "CacheNews"
     }
 
 }

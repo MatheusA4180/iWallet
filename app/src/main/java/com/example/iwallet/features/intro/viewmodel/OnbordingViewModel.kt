@@ -1,11 +1,11 @@
-package com.example.iwallet.features.intro.repository
+package com.example.iwallet.features.intro.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.intro.fragments.OnbordingFragment.Companion.LOGIN_CODE
-import com.example.iwallet.features.intro.viewmodel.OnbordingRepository
+import com.example.iwallet.features.intro.repository.OnbordingRepository
 import kotlinx.coroutines.launch
 
 class OnbordingViewModel(

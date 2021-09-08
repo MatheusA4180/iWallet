@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginRepository(private val sessionManager: SessionManager) {
 
+    fun saveCacheNews(save: Boolean) = sessionManager.saveCacheNews(save)
+
     fun saveUserLogin(email: String, password: String) =
         sessionManager.saveUserLogin(email, password)
 

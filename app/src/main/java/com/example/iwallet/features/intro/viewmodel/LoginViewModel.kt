@@ -67,6 +67,7 @@ class LoginViewModel(
             _showLoading.postValue(true)
             try{
                 loginRepository.loginInFirebase(User(email!!,password!!))
+                loginRepository.saveCacheNews(false)
                 _goToHome.postValue(Unit)
             }catch (e:Exception){
                 _showErro.postValue("erro no sistema")

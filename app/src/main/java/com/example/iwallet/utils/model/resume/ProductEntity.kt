@@ -17,5 +17,4 @@ data class ProductEntity(
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
-
 }
