@@ -1,5 +1,6 @@
 package com.example.iwallet.features.intro.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,14 +44,17 @@ class RegistrationFragment : Fragment() {
         }
 
         binding.registrationEmail.addTextChangedListener {
+            binding.registrationUsernameLayout.isErrorEnabled = false
             viewModel.onEmailChange(it.toString())
         }
 
         binding.registrationPassword.addTextChangedListener {
+            binding.registrationPasswordLayout.isErrorEnabled = false
             viewModel.onPasswordChange(it.toString())
         }
 
         binding.registrationConfirmPassword.addTextChangedListener {
+            binding.registrationConfirmPasswordLayout.isErrorEnabled = false
             viewModel.onConfirmPasswordChange(it.toString())
         }
 
@@ -63,7 +67,19 @@ class RegistrationFragment : Fragment() {
         })
 
         viewModel.showErro.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            AlertDialog.Builder(requireContext()).setTitle(it).setMessage("").show()
+        })
+
+        viewModel.showErroEmail.observe(viewLifecycleOwner, {
+            binding.registrationUsernameLayout.error = it
+        })
+
+        viewModel.showErroPassword.observe(viewLifecycleOwner, {
+            binding.registrationPasswordLayout.error = it
+        })
+
+        viewModel.showErroPasswordConfirm.observe(viewLifecycleOwner, {
+            binding.registrationConfirmPasswordLayout.error = it
         })
 
         viewModel.showLoading.observe(viewLifecycleOwner, {

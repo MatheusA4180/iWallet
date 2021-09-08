@@ -1,10 +1,12 @@
 package com.example.iwallet.features.intro.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.intro.repository.RegistrationRepository
+import com.example.iwallet.utils.extensionfunctions.ExtensionFunctions.isValidEmail
 import com.example.iwallet.utils.model.intro.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -21,8 +23,17 @@ class RegistrationViewModel(
     private val _goToLogin = MutableLiveData<Unit>()
     val goToLogin: LiveData<Unit> = _goToLogin
 
+    private val _showErroEmail = MutableLiveData<String>()
+    val showErroEmail: LiveData<String> = _showErroEmail
+
     private val _showErro = MutableLiveData<String>()
     val showErro: LiveData<String> = _showErro
+
+    private val _showErroPassword = MutableLiveData<String>()
+    val showErroPassword: LiveData<String> = _showErroPassword
+
+    private val _showErroPasswordConfirm = MutableLiveData<String>()
+    val showErroPasswordConfirm: LiveData<String> = _showErroPasswordConfirm
 
     private val _showLoading = MutableLiveData<Boolean>()
     val showLoading: LiveData<Boolean> = _showLoading
@@ -42,27 +53,30 @@ class RegistrationViewModel(
 
     fun onClickRegistrationConfirm() {
         viewModelScope.launch {
-            _showLoading.postValue(true)
-            delay(2000L)
             when {
                 email.isNullOrBlank() -> {
-                    _showErro.postValue("Email não preenchido!")
+                    _showErroEmail.postValue("Email não preenchido!")
+                }
+                email!!.isValidEmail() ->{
+                    _showErroEmail.postValue("Email não é valido!")
                 }
                 password.isNullOrBlank() -> {
-                    _showErro.postValue("Senha não preenchida!")
+                    _showErroPassword.postValue("Senha não preenchida!")
                 }
                 password!!.length < 6 -> {
-                    _showErro.postValue("A senha deve ter mais de 6 caracteres !")
+                    _showErroPassword.postValue("A senha deve ter mais de 6 caracteres !")
                 }
                 confirmPassword.isNullOrBlank() -> {
-                    _showErro.postValue("Senha de confirmação não preenchida!")
+                    _showErroPasswordConfirm.postValue("Senha de confirmação não preenchida!")
                 }
                 password != confirmPassword -> {
-                    _showErro.postValue("As senhas preechidas são diferentes")
+                    _showErroPassword.postValue("As senhas preechidas são diferentes")
+                    _showErroPasswordConfirm.postValue("As senhas preechidas são diferentes")
                 }
                 else -> {
                     _showLoading.postValue(true)
                     try{
+                        delay(500L)
                         registrationRepository.signUpInFirebase(User(email!!, password!!))
                         _goToLogin.postValue(Unit)
                     }catch (e:Exception){
@@ -71,7 +85,6 @@ class RegistrationViewModel(
                     _showLoading.postValue(false)
                 }
             }
-            _showLoading.postValue(false)
         }
     }
 

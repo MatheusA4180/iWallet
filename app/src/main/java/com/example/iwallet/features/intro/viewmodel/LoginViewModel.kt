@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.intro.repository.LoginRepository
+import com.example.iwallet.utils.extensionfunctions.ExtensionFunctions.isValidEmail
 import com.example.iwallet.utils.model.SingleLiveEvent
 import com.example.iwallet.utils.model.intro.User
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class LoginViewModel(
     private val loginRepository: LoginRepository
@@ -16,7 +18,6 @@ class LoginViewModel(
 
     private var email: String? = null
     private var password: String? = null
-    private var onChecked: Boolean = false
 
     private val _goToHome = SingleLiveEvent<Unit>()
     val goToHome: LiveData<Unit> = _goToHome
@@ -53,12 +54,23 @@ class LoginViewModel(
     }
 
     fun onLoginClicked() {
-        if (email.isNullOrBlank()) {
-            _emailErro.postValue("Email não preenchido!")
-        } else if (password.isNullOrBlank()) {
-            _passwordErro.postValue("Senha não preenchida!")
-        } else {
-            login()
+        when {
+            email.isNullOrBlank() && password.isNullOrBlank() -> {
+                _emailErro.postValue("Email não preenchido!")
+                _passwordErro.postValue("Senha não preenchida!")
+            }
+            email.isNullOrBlank() -> {
+                _emailErro.postValue("Email não preenchido!")
+            }
+            email!!.isValidEmail() -> {
+                _emailErro.postValue("Email não é valido!")
+            }
+            password.isNullOrBlank() -> {
+                _passwordErro.postValue("Senha não preenchida!")
+            }
+            else -> {
+                login()
+            }
         }
     }
 
@@ -66,11 +78,12 @@ class LoginViewModel(
         viewModelScope.launch {
             _showLoading.postValue(true)
             try{
+                delay(500L)
                 loginRepository.loginInFirebase(User(email!!,password!!))
                 loginRepository.saveCacheNews(false)
                 _goToHome.postValue(Unit)
             }catch (e:Exception){
-                _showErro.postValue("erro no sistema")
+                _showErro.postValue("Erro ao tentar fazer o login")
             }
             _showLoading.postValue(false)
         }
@@ -78,10 +91,8 @@ class LoginViewModel(
 
     fun onRememberChecked(isChecked: Boolean) {
         if (isChecked) {
-            this.onChecked = true
             saveLogin()
         } else {
-            this.onChecked = false
             deleteLogin()
         }
     }
@@ -94,13 +105,12 @@ class LoginViewModel(
         loginRepository.deleteUserLogin()
     }
 
-    fun getEmailAndPassword() {
-        _emailSave.postValue(loginRepository.getUserEmail())
-        _passwordSave.postValue(loginRepository.getUserPassword())
-    }
-
     fun initLogin() {
-        if ((email != "") || (password != "")) {
+        email = loginRepository.getUserEmail()
+        password = loginRepository.getUserPassword()
+        _emailSave.postValue(email!!)
+        _passwordSave.postValue(password!!)
+        if ((email!!.isNotEmpty()) || (password!!.isNotEmpty())) {
             _rememberUserToogle.postValue(Unit)
         }
     }

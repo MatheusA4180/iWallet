@@ -23,7 +23,6 @@ class NewsFragment: Fragment() {
     private var _binding: FragmentNewsBinding? = null
     private val binding: FragmentNewsBinding get() = _binding!!
     private val viewModel: NewsViewModel by viewModel()
-    private var position = requireArguments().getInt(POSITION_VIEW_PAGER_NEWS)
     private var listNews: List<NewsEntity> = mutableListOf()
 
     override fun onCreateView(
@@ -36,6 +35,8 @@ class NewsFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        val position = requireArguments().getInt(POSITION_VIEW_PAGER_NEWS)
 
         viewModel.requestNews()
 

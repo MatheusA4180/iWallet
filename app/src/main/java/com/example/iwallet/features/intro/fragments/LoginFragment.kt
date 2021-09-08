@@ -1,5 +1,6 @@
 package com.example.iwallet.features.intro.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,6 @@ class LoginFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return _binding!!.root
     }
@@ -49,7 +49,7 @@ class LoginFragment: Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
-        viewModel.getEmailAndPassword()
+        viewModel.initLogin()
 
         viewModel.emailSave.observe(viewLifecycleOwner,{
             binding.loginEmail.setText(it)
@@ -58,8 +58,6 @@ class LoginFragment: Fragment() {
         viewModel.passwordSave.observe(viewLifecycleOwner,{
             binding.loginPassword.setText(it)
         })
-
-        viewModel.initLogin()
 
         viewModel.rememberUserToogle.observe(viewLifecycleOwner, {
             binding.remeberLogin.toggle()
@@ -79,7 +77,7 @@ class LoginFragment: Fragment() {
         })
 
         viewModel.showErro.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+            AlertDialog.Builder(requireContext()).setTitle(it).setMessage("").show()
         })
 
         binding.remeberLogin.setOnCheckedChangeListener { _, isChecked ->

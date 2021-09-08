@@ -18,7 +18,7 @@ class LoginRepository(private val sessionManager: SessionManager) {
     fun getUserPassword(): String = sessionManager.getUserPassword()
 
     fun loginInFirebase(user: User) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email,user.password)
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(user.email,user.password)
     }
 
 }
