@@ -14,9 +14,10 @@ import androidx.fragment.app.DialogFragment
 import com.example.iwallet.R
 import com.example.iwallet.databinding.ProfileDialogBinding
 import com.example.iwallet.features.resume.adapter.ListOptionsProfileAdapter
+import com.example.iwallet.utils.clicklistener.ClickListeners
 import com.example.iwallet.utils.model.resume.ItemOptionProfile
 
-class ProfileDialog : DialogFragment(), ListOptionsProfileAdapter.ClickedProfileListener {
+class ProfileDialog : DialogFragment(), ClickListeners.ClickedProfileListener {
 
     private var _binding: ProfileDialogBinding? = null
     private val binding: ProfileDialogBinding get() = _binding!!

@@ -1,5 +1,6 @@
 package com.example.iwallet.features.resume.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentResumeBinding
 import com.example.iwallet.features.resume.ProfileDialog
+import com.example.iwallet.features.resume.ThemeNewsActivity
 import com.example.iwallet.features.resume.adapter.ListProductCompactAdapter
 import com.example.iwallet.features.resume.adapter.ViewPagerNewsAdapter
 import com.example.iwallet.features.resume.viewmodel.ResumeViewModel
@@ -97,6 +99,13 @@ class ResumeFragment : Fragment() {
 
         binding.toolbarResume.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.theme_news -> {
+                    startActivityForResult(
+                        Intent(requireActivity(), ThemeNewsActivity::class.java),
+                        REQUEST_CODE
+                    )
+                    true
+                }
                 R.id.profile -> {
                     ProfileDialog().show(childFragmentManager, null)
                     true
@@ -118,10 +127,16 @@ class ResumeFragment : Fragment() {
         })
 
         viewModel.profitability.observe(viewLifecycleOwner, {
-            binding.profitability.text = "0,00%"
-            //"${it.toString().replace(".",",")} %"
+            binding.profitability.text = getString(R.string.mock_profitability)
         })
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_CODE) {
+            binding.pagerNews.adapter = ViewPagerNewsAdapter(this)
+        }
     }
 
     private fun navigateToProductActivity(argument: String) {
@@ -179,6 +194,8 @@ class ResumeFragment : Fragment() {
     }
 
     companion object {
+        const val REQUEST_CODE = 1
+        const val RESULT_CODE = 2
         const val LIST_PRODUCT = "ListProduct"
         const val NEW_PRODUCT = "NewProduct"
     }

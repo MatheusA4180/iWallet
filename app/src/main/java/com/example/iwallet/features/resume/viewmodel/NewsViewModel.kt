@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val newsRepository: NewsRepository
-):ViewModel() {
+) : ViewModel() {
 
     private val _showLoading = MutableLiveData<Boolean>()
     val showLoading: LiveData<Boolean> = _showLoading
@@ -21,19 +21,19 @@ class NewsViewModel(
     private val _listNews = MutableLiveData<List<NewsEntity>>()
     val listNews: LiveData<List<NewsEntity>> = _listNews
 
-    fun requestNews(){
+    fun requestNews() {
         viewModelScope.launch {
-            if(!newsRepository.savedCacheNews()){
+            if (!newsRepository.savedCacheNews()) {
                 _showLoading.postValue(true)
                 try {
-                    val response = newsRepository.serchNews("criptomoedas")
+                    val response = newsRepository.serchNews()
                     newsRepository.saveCacheNews(true)
                     _listNews.postValue(response)
                 } catch (e: Exception) {
                     _responseErro.postValue(e.message)
                 }
                 _showLoading.postValue(false)
-            }else{
+            } else {
                 _listNews.postValue(newsRepository.returnListNewsCache())
             }
         }

@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentNewProductBinding
 import com.example.iwallet.features.resume.adapter.ListCategoriesAdapter
+import com.example.iwallet.utils.clicklistener.ClickListeners
 
-class NewProductFragment : Fragment(), ListCategoriesAdapter.ClickedCategoryListener {
+class NewProductFragment : Fragment(), ClickListeners.ClickedCategoryListener {
 
     private var _binding: FragmentNewProductBinding? = null
     private val binding: FragmentNewProductBinding get() = _binding!!
@@ -64,4 +65,5 @@ class NewProductFragment : Fragment(), ListCategoriesAdapter.ClickedCategoryList
         super.onDestroyView()
         _binding = null
     }
+
 }

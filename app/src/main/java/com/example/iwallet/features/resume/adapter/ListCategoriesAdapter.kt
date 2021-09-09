@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iwallet.R
+import com.example.iwallet.utils.clicklistener.ClickListeners
 
-class ListCategoriesAdapter (
+class ListCategoriesAdapter(
     private val listCategories: List<String>,
-    private val clickedCategoryListener: ClickedCategoryListener
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val clickedCategoryListener: ClickListeners.ClickedCategoryListener
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = listCategories.size
 
@@ -23,19 +24,21 @@ class ListCategoriesAdapter (
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductViewHolder) {
-            holder.textCategory.text = listCategories[position]
+            holder.bind(listCategories,position)
             holder.itemView.setOnClickListener {
-                clickedCategoryListener.clickCategoryListener(position,listCategories[position])
+                clickedCategoryListener.clickCategoryListener(position, listCategories[position])
             }
         }
     }
 
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textCategory: TextView = itemView.findViewById(R.id.text_item_category)
-    }
 
-    interface ClickedCategoryListener {
-        fun clickCategoryListener(positionRecyclerView: Int,category: String)
+        private val textCategory: TextView = itemView.findViewById(R.id.text_item_category)
+
+        fun bind(listCategories: List<String>, position: Int) {
+            textCategory.text = listCategories[position]
+        }
+
     }
 
 }

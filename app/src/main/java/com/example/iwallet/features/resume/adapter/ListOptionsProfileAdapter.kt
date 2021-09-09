@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iwallet.R
+import com.example.iwallet.utils.clicklistener.ClickListeners
 import com.example.iwallet.utils.model.resume.ItemOptionProfile
 
 class ListOptionsProfileAdapter(
     private val listOptionsProfile: List<ItemOptionProfile>,
-    private val clickedProfileListener: ClickedProfileListener
+    private val clickedProfileListener: ClickListeners.ClickedProfileListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = listOptionsProfile.size
@@ -33,6 +34,7 @@ class ListOptionsProfileAdapter(
     }
 
     class CardOptionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         private val icon: ImageView = itemView.findViewById(R.id.icon_profile)
         private val title: TextView = itemView.findViewById(R.id.description_profile_item)
 
@@ -40,10 +42,7 @@ class ListOptionsProfileAdapter(
             icon.setImageResource(listOptionsProfile[position].icon)
             title.text = listOptionsProfile[position].title
         }
-    }
 
-    interface ClickedProfileListener {
-        fun clickProfileListener(positionRecyclerView: Int)
     }
 
 }

@@ -10,15 +10,22 @@ import kotlinx.coroutines.launch
 
 class ListProductsViewModel(
     private val listProductsRepository: ListProductsRepository
-): ViewModel() {
+) : ViewModel() {
+
+    private lateinit var listProduct: List<Product>
 
     private val _listProducts = MutableLiveData<List<Product>>()
     val listProducts: LiveData<List<Product>> = _listProducts
 
-    fun requestListProducts(){
+    fun requestListProducts() {
         viewModelScope.launch {
-            _listProducts.postValue(listProductsRepository.returnListProducts())
+            listProduct = listProductsRepository.returnListProducts()
+            _listProducts.postValue(listProduct)
         }
+    }
+
+    fun searchProduct(query: String) {
+        _listProducts.postValue(listProduct.filter { it.name.contains(query) })
     }
 
 }

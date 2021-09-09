@@ -57,11 +57,13 @@ class DescriptionNewProductRepository(
                 total += product.total.toDouble()
             }
             listProducts.forEach { product ->
-                updateRate(product.name, String
-                    .format("%.2f", ((product.total.toDouble() / total)*100) ).toDouble() )
+                updateRate(product.name, calcAndformatPartOfWallet(product, total))
             }
         }
     }
+
+    private fun calcAndformatPartOfWallet(product: Product, total: Double) =
+        String.format("%.2f", ((product.total.toDouble() / total) * 100)).toDouble()
 
     private suspend fun updateRate(nameProduct: String, rateProduct: Double) {
         withContext(Dispatchers.IO) {

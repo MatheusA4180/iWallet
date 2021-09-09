@@ -18,16 +18,13 @@ class NewsRepository(
 
     fun savedCacheNews(): Boolean = sessionManager.savedCacheNews()
 
-    suspend fun serchNews(theme: String): List<NewsEntity> {
+    suspend fun serchNews(): List<NewsEntity> {
 
-        val response =  apiService.serchNews(theme, API_KEY)
-
-        val responseMap = mapNewsForNewsEntity(response.body()!!)
-
-        saveCache(responseMap)
+        val response = apiService.serchNews(sessionManager.getSaveThemeNews(), API_KEY)
 
         if (response.isSuccessful) {
-            return responseMap
+            saveCache(mapNewsForNewsEntity(response.body()!!))
+            return returnListNewsCache()
         } else {
             throw Exception("Erro ao carregar as notícias.")
         }
@@ -35,22 +32,13 @@ class NewsRepository(
     }
 
     private fun mapNewsForNewsEntity(response: News): List<NewsEntity> {
-        val listNewsEntity: MutableList<NewsEntity> = mutableListOf()
-        response.articles.forEach {
-            listNewsEntity.add(
-                NewsEntity(
-                    it.title,
-                    it.description,
-                    it.url,
-                    it.urlToImage
-                )
-            )
+        return response.articles.map {
+            NewsEntity(it.title,it.description,it.url,it.urlToImage)
         }
-        return listNewsEntity
     }
 
-    suspend fun returnListNewsCache(): List<NewsEntity>{
-        return withContext(Dispatchers.IO){
+    suspend fun returnListNewsCache(): List<NewsEntity> {
+        return withContext(Dispatchers.IO) {
             newsDAO.returnListNews()
         }
     }

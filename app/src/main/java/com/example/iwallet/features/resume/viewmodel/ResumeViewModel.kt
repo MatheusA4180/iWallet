@@ -1,19 +1,18 @@
 package com.example.iwallet.features.resume.viewmodel
 
-import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iwallet.features.resume.repository.ResumeRepository
-import com.example.iwallet.utils.model.resume.*
+import com.example.iwallet.utils.model.resume.DataAndColorsGraph
+import com.example.iwallet.utils.model.resume.Product
 import com.github.mikephil.charting.data.PieEntry
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ResumeViewModel(
     private val resumeRepository: ResumeRepository
-): ViewModel() {
+) : ViewModel() {
 
     private val _currentBalance = MutableLiveData<Double>()
     val currentBalance: LiveData<Double> = _currentBalance
@@ -27,13 +26,13 @@ class ResumeViewModel(
     private val _dataAndColorsGraph = MutableLiveData<DataAndColorsGraph>()
     val dataAndColorsGraph: LiveData<DataAndColorsGraph> = _dataAndColorsGraph
 
-    fun requestListProducts(){
+    fun requestListProducts() {
         viewModelScope.launch {
             _listProducts.postValue(resumeRepository.returnListProducts())
         }
     }
 
-    fun requestCurrentBalanceAndProfitability(){
+    fun requestCurrentBalanceAndProfitability() {
         viewModelScope.launch {
             val listProductsResponse = resumeRepository.returnListProducts()
             var sumCurrentBalance = 0.0
@@ -47,21 +46,16 @@ class ResumeViewModel(
         }
     }
 
-    fun requestDataForGraph(){
+    fun requestDataForGraph() {
         viewModelScope.launch {
             val listProductsResponse = resumeRepository.returnListProducts()
             val productsTotal: MutableMap<String, Int> = HashMap()
             val colors: ArrayList<Int> = ArrayList()
             val pieEntries: ArrayList<PieEntry> = ArrayList()
 
-            listProductsResponse.forEachIndexed{ index, product ->
+            listProductsResponse.forEachIndexed { index, product ->
                 productsTotal[product.name] = product.total.toDouble().toInt()
                 colors.add(product.color.toInt())
-//                if (index != listProductsResponse.size-1) {
-//                    colors.add(listProductsResponse[index + 1].color.toInt())
-//                } else {
-//                    colors.add(listProductsResponse[0].color.toInt())
-//                }
             }
 
             for (type in productsTotal.keys) {

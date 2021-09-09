@@ -11,9 +11,10 @@ import com.example.iwallet.databinding.FragmentListProductsBinding
 import com.example.iwallet.features.resume.adapter.ListProductsAdapter
 import com.example.iwallet.features.resume.viewmodel.ListProductsViewModel
 import com.example.iwallet.features.wallet.adapter.ViewPagerWalletAdapter.Companion.TOOLBAR_ENABLE
+import com.example.iwallet.utils.clicklistener.ClickListeners
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListProductsFragment : Fragment(), ListProductsAdapter.ClickedProductListener {
+class ListProductsFragment : Fragment(), ClickListeners.ClickedProductListener {
 
     private var _binding: FragmentListProductsBinding? = null
     private val binding: FragmentListProductsBinding get() = _binding!!
@@ -35,17 +36,21 @@ class ListProductsFragment : Fragment(), ListProductsAdapter.ClickedProductListe
 
         try {
             binding.toolbarListProducts.isVisible = requireArguments().getBoolean(TOOLBAR_ENABLE)
-            binding.titleToolbarListProducts.isVisible = requireArguments().getBoolean(TOOLBAR_ENABLE)
+            binding.titleToolbarListProducts.isVisible =
+                requireArguments().getBoolean(TOOLBAR_ENABLE)
             toobarEnable = requireArguments().getBoolean(TOOLBAR_ENABLE)
-        }catch (e:Exception){}
+        } catch (e: Exception) { }
 
         binding.toolbarListProducts.setNavigationOnClickListener {
             requireActivity().finish()
         }
 
-        //Toast.makeText(requireContext(), binding.searchView.query.toString() , Toast.LENGTH_LONG).show()
+        //bug
+        binding.searchView.setOnClickListener {
+            viewModel.searchProduct(binding.searchView.query.toString())
+        }
 
-        viewModel.listProducts.observe(viewLifecycleOwner,{
+        viewModel.listProducts.observe(viewLifecycleOwner, {
             binding.listProducts.adapter = ListProductsAdapter(
                 it,
                 this@ListProductsFragment,
@@ -55,10 +60,22 @@ class ListProductsFragment : Fragment(), ListProductsAdapter.ClickedProductListe
 
     }
 
-    override fun clickProductListener(nameBroker: String,nameProduct: String,category: String,color: String) {
+    override fun clickProductListener(
+        nameBroker: String,
+        nameProduct: String,
+        category: String,
+        color: String
+    ) {
         findNavController()
-            .navigate(ListProductsFragmentDirections
-                .actionAddOrSubtractProductFragmentToDescriptionProductFragment(nameBroker,nameProduct,category,color))
+            .navigate(
+                ListProductsFragmentDirections
+                    .actionAddOrSubtractProductFragmentToDescriptionProductFragment(
+                        nameBroker,
+                        nameProduct,
+                        category,
+                        color
+                    )
+            )
     }
 
     override fun onDestroyView() {

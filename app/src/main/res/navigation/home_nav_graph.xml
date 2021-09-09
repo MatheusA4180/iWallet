@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_resumeFragment_to_productsActivity"
             app:destination="@id/productsActivity" />
+        <action
+            android:id="@+id/action_resumeFragment_to_themesNewsFragment"
+            app:destination="@id/themesNewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/walletFragment"

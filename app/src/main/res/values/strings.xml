@@ -27,4 +27,12 @@
     <string name="item_category_8">Renda fixa Pós-fixada</string>
     <string name="item_category_9">Renda fixa Prefixada</string>
     <string name="item_category_10">Tesouro direto</string>
+    <string name="title_color_picker">Escolha a cor que terá o produto</string>
+    <string name="text_cancel">Cancelar</string>
+    <string name="text_ok">Ok</string>
+    <string name="title_color_picker_edit">Escolha a nova cor do produto</string>
+    <string name="title_remove_product">Deseja excluir esse produto?</string>
+    <string name="text_negative">Não</string>
+    <string name="text_positive">Sim</string>
+    <string name="mock_profitability">0,00%</string>
 </resources>

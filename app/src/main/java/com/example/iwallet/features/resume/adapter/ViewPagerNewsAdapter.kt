@@ -17,8 +17,8 @@ class ViewPagerNewsAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) 
         }
     }
 
-    companion object{
-        const val POSITION_VIEW_PAGER_NEWS = "position_view_pager_news"
+    companion object {
+        const val POSITION_VIEW_PAGER_NEWS = "positionViewPagerNews"
     }
 
 }

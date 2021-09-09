@@ -1,11 +1,11 @@
 package com.example.iwallet.features.resume.fragments
 
 import android.app.AlertDialog
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -15,20 +15,24 @@ import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentDescriptionProductBinding
 import com.example.iwallet.features.resume.viewmodel.DescriptionProductViewModel
 import com.example.iwallet.utils.helperfunctions.HelperFunctions.formatDate
+import com.example.iwallet.utils.mask.MoneyTextMask
 import com.flask.colorpicker.ColorPickerView
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
+import org.koin.core.parameter.parametersOf
 import java.util.*
 
 class DescriptionProductFragment : Fragment() {
 
     private var _binding: FragmentDescriptionProductBinding? = null
     private val binding: FragmentDescriptionProductBinding get() = _binding!!
-    private val viewModel: DescriptionProductViewModel by viewModel()
     private val arguments: DescriptionProductFragmentArgs by navArgs()
+    private val viewModel: DescriptionProductViewModel by viewModel {
+        parametersOf(arguments)
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,26 +45,21 @@ class DescriptionProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        paintButtonOn(binding.addApplication)
+        paintButtonOnAndOff(binding.addApplication, binding.addRescue)
 
-        viewModel.changeNameProduct(arguments.nameProduct)
-        viewModel.changeBrokerProduct(arguments.nameBroker)
-        viewModel.changeCategotyProduct(arguments.category)
-        viewModel.changeColorProduct(arguments.color.toInt())
+        binding.registrationPrice.addTextChangedListener(MoneyTextMask(binding.registrationPrice))
 
         binding.toolbarDescriptionProduct.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
 
         binding.addApplication.setOnClickListener {
-            paintButtonOn(binding.addApplication)
-            paintButtonOff(binding.addRescue)
+            paintButtonOnAndOff(binding.addApplication, binding.addRescue)
             viewModel.buttonPressedApplication()
         }
 
         binding.addRescue.setOnClickListener {
-            paintButtonOn(binding.addRescue)
-            paintButtonOff(binding.addApplication)
+            paintButtonOnAndOff(binding.addRescue, binding.addApplication)
             viewModel.buttonPressedRescue()
         }
 
@@ -74,13 +73,14 @@ class DescriptionProductFragment : Fragment() {
             }
         }
 
-        binding.nameBrokerDescription.text = "Instituição financeira: " + arguments.nameBroker
+        binding.nameBrokerDescription.text = "Instituição financeira: ${arguments.nameBroker}"
 
-        binding.nameProductDescription.text = "Produto: " + arguments.nameProduct
+        binding.nameProductDescription.text = "Produto: ${arguments.nameProduct}"
 
         binding.colorProduct.setCardBackgroundColor(arguments.color.toInt())
 
         binding.registrationPrice.addTextChangedListener {
+            binding.registrationPriceLayout.isErrorEnabled = false
             viewModel.changePriceProduct(it.toString())
         }
 
@@ -89,7 +89,8 @@ class DescriptionProductFragment : Fragment() {
         }
 
         binding.dateCard.setOnClickListener {
-            MaterialDatePicker.Builder.datePicker().setTitleText(getString(R.string.title_date_picker))
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText(getString(R.string.title_date_picker))
                 .build().apply {
                     addOnPositiveButtonClickListener {
                         val calendar = Calendar.getInstance()
@@ -104,18 +105,18 @@ class DescriptionProductFragment : Fragment() {
         binding.colorProduct.setOnClickListener {
             ColorPickerDialogBuilder
                 .with(context)
-                .setTitle("Escolha a nova cor do produto")
+                .setTitle(getString(R.string.title_color_picker_edit))
                 .initialColor(arguments.color.toInt())
                 .wheelType(ColorPickerView.WHEEL_TYPE.CIRCLE)
                 .density(12)
                 .setPositiveButton(
-                    "Ok"
+                    getString(R.string.text_ok)
                 ) { dialog, selectedColor, allColors ->
                     binding.colorProduct.setCardBackgroundColor(selectedColor)
                     viewModel.changeColorProduct(selectedColor)
                 }
                 .setNegativeButton(
-                    "Cancelar"
+                    getString(R.string.text_cancel)
                 ) { dialog, which -> }
                 .build()
                 .show()
@@ -123,33 +124,45 @@ class DescriptionProductFragment : Fragment() {
 
         binding.registrationApplyConfirm.setOnClickListener {
             viewModel.applyRegisterUpdateProduct()
-            findNavController().navigateUp()
         }
+
+        viewModel.showErroPrice.observe(viewLifecycleOwner, {
+            binding.registrationPriceLayout.error = it
+        })
+
+        viewModel.showErroDate.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
+        })
+
+        viewModel.confirmRegistration.observe(viewLifecycleOwner, {
+            findNavController().navigateUp()
+        })
 
     }
 
     private fun confirmRemoveItem() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Deseja excluir esse produto?")
+            .setTitle(getString(R.string.title_remove_product))
             .setMessage("")
-            .setNegativeButton("Não") { _, _ -> }
-            .setPositiveButton("Sim") { _, _ ->
+            .setNegativeButton(getString(R.string.text_negative)) { _, _ -> }
+            .setPositiveButton(getString(R.string.text_positive)) { _, _ ->
                 viewModel.deleteProduct(arguments.nameProduct)
-                findNavController().navigateUp() }
+                findNavController().navigateUp()
+            }
             .create()
             .show()
     }
 
-    private fun paintButtonOn(button: ExtendedFloatingActionButton) {
-        with(button) {
+    private fun paintButtonOnAndOff(
+        buttonOn: ExtendedFloatingActionButton,
+        buttonOff: ExtendedFloatingActionButton
+    ) {
+        with(buttonOn) {
             setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
             setTextColor(ContextCompat.getColor(requireContext(), R.color.main_theme))
             setStrokeColorResource(R.color.main_theme)
         }
-    }
-
-    private fun paintButtonOff(button: ExtendedFloatingActionButton) {
-        with(button) {
+        with(buttonOff) {
             setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.main_theme))
             setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             setStrokeColorResource(R.color.white)
@@ -161,7 +174,7 @@ class DescriptionProductFragment : Fragment() {
         _binding = null
     }
 
-    companion object{
+    companion object {
         const val APPLICATION = "application"
         const val RESCUE = "rescue"
     }

@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/theme_news"
+        android:icon="@drawable/ic_theme_news"
+        android:title="Temas de notícia"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/profile"
         android:icon="@drawable/ic_profile"
         android:title="Perfil"

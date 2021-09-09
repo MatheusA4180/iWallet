@@ -13,31 +13,33 @@ class DescriptionProductRepository(
     private val extractDAO: ExtractDAO
 ) {
 
+    suspend fun deleteProduct(nameProduct: String) {
+        withContext(Dispatchers.IO) {
+            productDAO.deleteProduct(nameProduct)
+            mapForPartOfWallet()
+        }
+    }
+
     suspend fun registerUpdateProduct(productNew: Product, buttonPressed: String) {
         withContext(Dispatchers.IO) {
-            val productOld = productDAO.searchProduct(productNew.name)
-            if (buttonPressed == APPLICATION) {
-                saveExtract(productNew, buttonPressed)
-                productDAO.updateProduct(
-                    productOld.name,
-                    calcNewPriceApplication(productOld, productNew),
-                    calcNewQuantityApplication(productOld, productNew),
-                    calcNewTotalApplication(productOld, productNew),
-                    productNew.color
-                )
-                mapForPartOfWallet()
-            } else {
-                saveExtract(productNew, buttonPressed)
-                productDAO.updateProduct(
-                    productOld.name,
-                    calcNewPriceRescue(productOld, productNew),
-                    calcNewQuantityRescue(productOld, productNew),
-                    calcNewTotalRescue(productOld, productNew),
-                    productNew.color
-                )
-                mapForPartOfWallet()
-            }
+            UpdateProduct(productDAO.searchProduct(productNew.name), productNew, buttonPressed)
         }
+    }
+
+    private suspend fun UpdateProduct(
+        productOld: Product,
+        productNew: Product,
+        buttonPressed: String,
+    ) {
+        saveExtract(productNew, buttonPressed)
+        productDAO.updateProduct(
+            productOld.name,
+            calcNewPriceApplicationOrRescue(productOld, productNew, buttonPressed),
+            calcNewQuantityApplicationOrRescue(productOld, productNew, buttonPressed),
+            calcNewTotalApplicationOrRescue(productOld, productNew, buttonPressed),
+            productNew.color
+        )
+        mapForPartOfWallet()
     }
 
     private suspend fun saveExtract(productNew: Product, buttonPressed: String) {
@@ -55,10 +57,50 @@ class DescriptionProductRepository(
         }
     }
 
-    suspend fun deleteProduct(nameProduct: String) {
-        withContext(Dispatchers.IO) {
-            productDAO.deleteProduct(nameProduct)
-            mapForPartOfWallet()
+    private fun calcNewTotalApplicationOrRescue(
+        productOld: Product,
+        productNew: Product,
+        buttonPressed: String
+    ): String {
+        return when (buttonPressed) {
+            APPLICATION -> {
+                (productOld.total.toDouble() + productNew.total.toDouble()).toString()
+            }
+            else -> {
+                (productOld.total.toDouble() - productNew.total.toDouble()).toString()
+            }
+        }
+    }
+
+    private fun calcNewQuantityApplicationOrRescue(
+        productOld: Product,
+        productNew: Product,
+        buttonPressed: String
+    ): String {
+        return when (buttonPressed) {
+            APPLICATION -> {
+                (productOld.quantity.toDouble() + productNew.quantity.toDouble()).toString()
+            }
+            else -> {
+                (productOld.quantity.toDouble() - productNew.quantity.toDouble()).toString()
+            }
+        }
+    }
+
+    private fun calcNewPriceApplicationOrRescue(
+        productOld: Product,
+        productNew: Product,
+        buttonPressed: String
+    ): String {
+        val denominator =
+            calcNewQuantityApplicationOrRescue(productOld, productNew, buttonPressed).toDouble()
+        return when (buttonPressed) {
+            APPLICATION -> {
+                ((productOld.total.toDouble() + productNew.total.toDouble()) / denominator).toString()
+            }
+            else -> {
+                ((productOld.total.toDouble() - productNew.total.toDouble()) / denominator).toString()
+            }
         }
     }
 
@@ -70,11 +112,13 @@ class DescriptionProductRepository(
                 total += product.total.toDouble()
             }
             listProducts.forEach { product ->
-                updateRate(product.name,String
-                    .format("%.2f", ((product.total.toDouble() / total)*100) ).toDouble() )
+                updateRate(product.name, calcAndformatPartOfWallet(product, total))
             }
         }
     }
+
+    private fun calcAndformatPartOfWallet(product: Product, total: Double) =
+        String.format("%.2f", ((product.total.toDouble() / total) * 100)).toDouble()
 
     private suspend fun updateRate(nameProduct: String, rateProduct: Double) {
         withContext(Dispatchers.IO) {
@@ -83,32 +127,6 @@ class DescriptionProductRepository(
                 rateProduct.toString()
             )
         }
-    }
-
-    private fun calcNewTotalApplication(productOld: Product, productNew: Product): String {
-        return (productNew.total.toDouble() + productOld.total.toDouble()).toString()
-    }
-
-    private fun calcNewTotalRescue(productOld: Product, productNew: Product): String {
-        return (productOld.total.toDouble() - productNew.total.toDouble()).toString()
-    }
-
-    private fun calcNewQuantityApplication(productOld: Product, productNew: Product): String {
-        return (productNew.quantity.toDouble() + productOld.quantity.toDouble()).toString()
-    }
-
-    private fun calcNewQuantityRescue(productOld: Product, productNew: Product): String {
-        return (productOld.quantity.toDouble() - productNew.quantity.toDouble()).toString()
-    }
-
-    private fun calcNewPriceApplication(productOld: Product, productNew: Product): String {
-        val denominator = calcNewQuantityApplication(productOld, productNew).toDouble()
-        return ((productNew.total.toDouble() + productOld.total.toDouble()) / denominator).toString()
-    }
-
-    private fun calcNewPriceRescue(productOld: Product, productNew: Product): String {
-        val denominator = calcNewQuantityRescue(productOld, productNew).toDouble()
-        return ((productOld.total.toDouble() - productNew.total.toDouble()) / denominator).toString()
     }
 
 }

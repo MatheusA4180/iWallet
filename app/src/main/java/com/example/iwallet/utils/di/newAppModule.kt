@@ -3,13 +3,15 @@ package com.example.iwallet.utils.di
 import android.content.Context
 import com.example.iwallet.R
 import com.example.iwallet.features.intro.repository.LoginRepository
-import com.example.iwallet.features.intro.viewmodel.OnbordingViewModel
+import com.example.iwallet.features.intro.repository.OnbordingRepository
 import com.example.iwallet.features.intro.repository.RegistrationRepository
 import com.example.iwallet.features.intro.repository.SplashRepository
 import com.example.iwallet.features.intro.viewmodel.LoginViewModel
-import com.example.iwallet.features.intro.repository.OnbordingRepository
+import com.example.iwallet.features.intro.viewmodel.OnbordingViewModel
 import com.example.iwallet.features.intro.viewmodel.RegistrationViewModel
 import com.example.iwallet.features.intro.viewmodel.SplashViewModel
+import com.example.iwallet.features.resume.fragments.DescriptionNewProductFragmentArgs
+import com.example.iwallet.features.resume.fragments.DescriptionProductFragmentArgs
 import com.example.iwallet.features.resume.repository.*
 import com.example.iwallet.features.resume.viewmodel.*
 import com.example.iwallet.features.wallet.repository.ExtractRepository
@@ -46,20 +48,24 @@ val newAppModule = module {
         NewsViewModel(get())
     }
 
-    viewModel {
-        DescriptionNewProductViewModel(get())
+    viewModel { (arguments: DescriptionNewProductFragmentArgs) ->
+        DescriptionNewProductViewModel(get(),arguments)
     }
 
     viewModel {
         ListProductsViewModel(get())
     }
 
-    viewModel {
-        DescriptionProductViewModel(get())
+    viewModel { (arguments: DescriptionProductFragmentArgs) ->
+        DescriptionProductViewModel(get(),arguments)
     }
 
     viewModel {
         ExtractViewModel(get())
+    }
+
+    viewModel {
+        ThemesNewsViewModel(get())
     }
 
     factory {
@@ -83,7 +89,7 @@ val newAppModule = module {
     }
 
     factory {
-        NewsRepository(get(),get(),get())
+        NewsRepository(get(), get(), get())
     }
 
     factory {
@@ -100,6 +106,10 @@ val newAppModule = module {
 
     factory {
         ExtractRepository(get())
+    }
+
+    factory {
+        ThemesNewsRepository(get())
     }
 
     single {

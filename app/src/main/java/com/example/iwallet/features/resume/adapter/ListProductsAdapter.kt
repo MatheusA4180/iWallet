@@ -7,14 +7,16 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iwallet.R
+import com.example.iwallet.utils.clicklistener.ClickListeners
+import com.example.iwallet.utils.helperfunctions.HelperFunctions.converterToPercent
 import com.example.iwallet.utils.helperfunctions.HelperFunctions.converterToReal
 import com.example.iwallet.utils.model.resume.Product
 
 class ListProductsAdapter(
     private val listProducts: List<Product>,
-    private val clickedProductListener: ClickedProductListener,
+    private val clickedProductListener: ClickListeners.ClickedProductListener,
     private val toolbarEnable: Boolean
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = listProducts.size
 
@@ -27,21 +29,10 @@ class ListProductsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductViewHolder) {
-            holder.nameBroker.text = listProducts[position].broker
-            holder.nameProduct.text = listProducts[position].name
-            holder.categoryProduct.text = listProducts[position].category
-            holder.profitability.text =
-                "${listProducts[position].rate.toDouble().toString().replace(".",",")} %"
-            holder.balanceProduct.text = converterToReal(listProducts[position].total.toDouble())
-            holder.nameBroker.setTextColor(listProducts[position].color.toInt())
-            holder.nameProduct.setTextColor(listProducts[position].color.toInt())
-            holder.categoryProduct.setTextColor(listProducts[position].color.toInt())
-            holder.balanceProduct.setTextColor(listProducts[position].color.toInt())
-            holder.profitability.setTextColor(listProducts[position].color.toInt())
-            holder.bannerProduct.setCardBackgroundColor(listProducts[position].color.toInt())
-
+            holder.bind(listProducts, position)
+            holder.setColor(listProducts[position].color.toInt())
             holder.itemView.setOnClickListener {
-                if(toolbarEnable){
+                if (toolbarEnable) {
                     clickedProductListener.clickProductListener(
                         listProducts[position].broker,
                         listProducts[position].name,
@@ -54,21 +45,31 @@ class ListProductsAdapter(
     }
 
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nameBroker: TextView = itemView.findViewById(R.id.name_broker)
-        val nameProduct: TextView = itemView.findViewById(R.id.name_product)
-        val categoryProduct: TextView = itemView.findViewById(R.id.category_product)
-        val profitability: TextView = itemView.findViewById(R.id.profitability)
-        val balanceProduct: TextView = itemView.findViewById(R.id.balance_product)
-        val bannerProduct: CardView = itemView.findViewById(R.id.banner)
-    }
 
-    interface ClickedProductListener {
-        fun clickProductListener(
-            nameBroker: String,
-            nameProduct: String,
-            category : String,
-            color: String
-        )
+        private val nameBroker: TextView = itemView.findViewById(R.id.name_broker)
+        private val nameProduct: TextView = itemView.findViewById(R.id.name_product)
+        private val categoryProduct: TextView = itemView.findViewById(R.id.category_product)
+        private val profitability: TextView = itemView.findViewById(R.id.profitability)
+        private val balanceProduct: TextView = itemView.findViewById(R.id.balance_product)
+        private val bannerProduct: CardView = itemView.findViewById(R.id.banner)
+
+        fun bind(listProducts: List<Product>, position: Int) {
+            nameBroker.text = listProducts[position].broker
+            nameProduct.text = listProducts[position].name
+            categoryProduct.text = listProducts[position].category
+            profitability.text = converterToPercent(listProducts[position].rate)
+            balanceProduct.text = converterToReal(listProducts[position].total.toDouble())
+        }
+
+        fun setColor(color: Int) {
+            nameBroker.setTextColor(color)
+            nameProduct.setTextColor(color)
+            categoryProduct.setTextColor(color)
+            balanceProduct.setTextColor(color)
+            profitability.setTextColor(color)
+            bannerProduct.setCardBackgroundColor(color)
+        }
+
     }
 
 }

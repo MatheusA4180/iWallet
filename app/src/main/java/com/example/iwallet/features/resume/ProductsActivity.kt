@@ -31,4 +31,5 @@ class ProductsActivity : AppCompatActivity() {
         navHostFragment.navController.graph = graph
 
     }
+
 }

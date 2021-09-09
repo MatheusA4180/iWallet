@@ -69,7 +69,6 @@ class ListExtractAdapter(
                 .getColor(context, color))
         }
 
-
     }
 
 }
