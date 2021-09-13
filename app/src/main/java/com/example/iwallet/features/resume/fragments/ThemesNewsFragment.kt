@@ -73,7 +73,7 @@ class ThemesNewsFragment : Fragment() {
 
     companion object {
         const val THEME_NEWS = "themesNews"
-        const val CRIPTO_RADIO = "criptomoedas"
+        const val CRIPTO_RADIO = "criptoativos"
         const val STOCKS_RADIO = "mercado de ações"
         const val REITS_RADIO = "FIIs"
         const val WELFARE_RADIO = "Previdencia"

@@ -77,7 +77,7 @@ class LoginFragment: Fragment() {
         })
 
         viewModel.showErro.observe(viewLifecycleOwner, {
-            AlertDialog.Builder(requireContext()).setTitle(it).setMessage("").show()
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
 
         binding.remeberLogin.setOnCheckedChangeListener { _, isChecked ->

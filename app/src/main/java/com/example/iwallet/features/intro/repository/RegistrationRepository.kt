@@ -6,7 +6,10 @@ import com.google.firebase.auth.FirebaseAuth
 class RegistrationRepository() {
 
     fun signUpInFirebase(user: User) {
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email,user.password)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email, user.password)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) return@addOnCompleteListener
+            }
     }
 
 }

@@ -3,6 +3,9 @@ package com.example.iwallet.features.intro.repository
 import com.example.iwallet.utils.data.local.SessionManager
 import com.example.iwallet.utils.model.intro.User
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 
 class LoginRepository(private val sessionManager: SessionManager) {
 
@@ -17,8 +20,25 @@ class LoginRepository(private val sessionManager: SessionManager) {
 
     fun getUserPassword(): String = sessionManager.getUserPassword()
 
-    fun loginInFirebase(user: User) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(user.email,user.password)
+    suspend fun loginInFirebase(user: User) {
+        withContext(Dispatchers.IO) {
+            var erroAuth = false
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(user.email, user.password)
+                .addOnCompleteListener {
+                    if (!it.isSuccessful) return@addOnCompleteListener
+                }
+                .addOnFailureListener {
+                    erroAuth = true
+                }
+            delay(1000L)
+            erroAuthFirebase(erroAuth)
+        }
+    }
+
+    fun erroAuthFirebase(erroAuth: Boolean) {
+        if (erroAuth) {
+            throw Exception("Usuário Inválido")
+        }
     }
 
 }

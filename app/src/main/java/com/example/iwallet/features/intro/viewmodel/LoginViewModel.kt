@@ -78,12 +78,11 @@ class LoginViewModel(
         viewModelScope.launch {
             _showLoading.postValue(true)
             try{
-                delay(500L)
                 loginRepository.loginInFirebase(User(email!!,password!!))
                 loginRepository.saveCacheNews(false)
                 _goToHome.postValue(Unit)
             }catch (e:Exception){
-                _showErro.postValue("Erro ao tentar fazer o login")
+                _showErro.postValue(e.message)
             }
             _showLoading.postValue(false)
         }

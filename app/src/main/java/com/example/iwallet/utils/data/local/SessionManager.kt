@@ -2,7 +2,7 @@ package com.example.iwallet.utils.data.local
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.example.iwallet.features.resume.fragments.ThemesNewsFragment.Companion.CRIPTO_RADIO
+import com.example.iwallet.features.resume.fragments.ThemesNewsFragment.Companion.STOCKS_RADIO
 
 class SessionManager(private val preferences: SharedPreferences) {
 
@@ -46,7 +46,7 @@ class SessionManager(private val preferences: SharedPreferences) {
         }
     }
 
-    fun getSaveThemeNews(): String = preferences.getString(THEME_NEWS, CRIPTO_RADIO)!!
+    fun getSaveThemeNews(): String = preferences.getString(THEME_NEWS, STOCKS_RADIO)!!
 
     companion object {
         private const val PASS_TO_ONBOARDING = "Passou"
