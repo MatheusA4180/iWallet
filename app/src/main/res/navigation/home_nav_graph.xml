@@ -21,11 +21,6 @@
         android:name="com.example.iwallet.features.wallet.fragments.WalletFragment"
         android:label="WalletFragment"
         tools:layout="@layout/fragment_wallet"/>
-    <fragment
-        android:id="@+id/moneyManagerFragment"
-        android:name="com.example.iwallet.features.manager.fragments.MoneyManagerFragment"
-        android:label="MoneyManagerFragment"
-        tools:layout="@layout/fragment_money_manager"/>
     <activity
         android:id="@+id/productsActivity"
         android:name="com.example.iwallet.features.resume.ProductsActivity"
