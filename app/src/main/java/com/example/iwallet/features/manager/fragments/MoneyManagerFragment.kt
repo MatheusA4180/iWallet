@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.iwallet.R
 import com.example.iwallet.databinding.FragmentMoneyManagerBinding
+import com.example.iwallet.features.manager.adapter.ListFinancesAdapter
 import com.example.iwallet.features.resume.ProfileDialog
 import com.example.iwallet.features.resume.ThemeNewsActivity
 import com.example.iwallet.features.resume.fragments.ResumeFragment
@@ -74,6 +75,8 @@ class MoneyManagerFragment : Fragment() {
                 else -> false
             }
         }
+
+        binding.listFinances.adapter = ListFinancesAdapter(listOf("","","","","","","","","","",""))
 
         binding.addMoneyManager.setOnClickListener {
             setVisibility(clicked)

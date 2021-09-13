@@ -10,6 +10,8 @@ import com.example.iwallet.features.intro.viewmodel.LoginViewModel
 import com.example.iwallet.features.intro.viewmodel.OnbordingViewModel
 import com.example.iwallet.features.intro.viewmodel.RegistrationViewModel
 import com.example.iwallet.features.intro.viewmodel.SplashViewModel
+import com.example.iwallet.features.manager.repository.MoneyManagerRepository
+import com.example.iwallet.features.manager.viewmodel.MoneyManagerViewModel
 import com.example.iwallet.features.resume.fragments.DescriptionNewProductFragmentArgs
 import com.example.iwallet.features.resume.fragments.DescriptionProductFragmentArgs
 import com.example.iwallet.features.resume.repository.*
@@ -68,6 +70,10 @@ val newAppModule = module {
         ThemesNewsViewModel(get())
     }
 
+    viewModel {
+        MoneyManagerViewModel(get())
+    }
+
     factory {
         SplashRepository(get())
     }
@@ -112,6 +118,10 @@ val newAppModule = module {
         ThemesNewsRepository(get())
     }
 
+    factory {
+        MoneyManagerRepository(get())
+    }
+
     single {
         AppDatabase.getInstance(androidContext()).newsDAO()
     }
@@ -122,6 +132,10 @@ val newAppModule = module {
 
     single {
         AppDatabase.getInstance(androidContext()).productDAO()
+    }
+
+    single {
+        AppDatabase.getInstance(androidContext()).financesDAO()
     }
 
     single {

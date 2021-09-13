@@ -11,9 +11,9 @@
         android:enabled="true"
         android:icon="@drawable/ic_wallet"
         android:title="Carteira" />
-    <item
-        android:id="@+id/moneyManagerFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_money_manager"
-        android:title="Finanças" />
+<!--    <item-->
+<!--        android:id="@+id/moneyManagerFragment"-->
+<!--        android:enabled="true"-->
+<!--        android:icon="@drawable/ic_money_manager"-->
+<!--        android:title="Finanças" />-->
 </menu>
