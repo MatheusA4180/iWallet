@@ -1,7 +1,7 @@
 ## Seja bem-vindo(a)! :smile:
 
 <br />
-<div align="center" > <img  width=“200” height="300" src="https://user-images.githubusercontent.com/62591896/131683261-d15311f4-96fc-4dde-b3df-3cfc2336c2d4.png"> </div>
+<div align="center" > <img  width=“300” height="200" src="https://user-images.githubusercontent.com/62591896/131683261-d15311f4-96fc-4dde-b3df-3cfc2336c2d4.png"> </div>
 <br />
 
 Esse repositório contém um projeto mobile desenvolvido por mim durante 15 dias de bootcamp na empresa Compasso UOL.
