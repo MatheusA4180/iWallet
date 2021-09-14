@@ -85,7 +85,7 @@ val newAppModule = module {
     }
 
     factory {
-        ResumeRepository(get())
+        ResumeRepository(get(),get())
     }
 
     factory {
@@ -93,7 +93,7 @@ val newAppModule = module {
     }
 
     factory {
-        DescriptionNewProductRepository(get(), get())
+        DescriptionNewProductRepository(get(), get(),get())
     }
 
     factory {
@@ -101,7 +101,7 @@ val newAppModule = module {
     }
 
     factory {
-        DescriptionProductRepository(get(), get())
+        DescriptionProductRepository(get(), get(),get())
     }
 
     factory {

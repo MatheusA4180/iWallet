@@ -48,12 +48,30 @@ class SessionManager(private val preferences: SharedPreferences) {
 
     fun getSaveThemeNews(): String = preferences.getString(THEME_NEWS, STOCKS_RADIO)!!
 
+    fun saveUserEmailBackup(email: String){
+        preferences.edit {
+            putString(EMAIL_BACKUP, email)
+        }
+    }
+
+    fun getSaveUserEmailBackup(): String = preferences.getString(EMAIL_BACKUP, "")!!
+
+    fun passedByQuestBackup(): Boolean = preferences.getBoolean(PASS_TO_QUEST_BACKUP, false)
+
+    fun saveUserPassQuestBackup() {
+        preferences.edit {
+            putBoolean(PASS_TO_QUEST_BACKUP, true)
+        }
+    }
+
     companion object {
-        private const val PASS_TO_ONBOARDING = "Passou"
+        private const val PASS_TO_ONBOARDING = "PassOnBoarding"
         private const val USER = "Username"
         private const val PASSWORD = "Password"
         private const val CACHE_NEWS = "CacheNews"
         private const val THEME_NEWS = "ThemeNews"
+        private const val EMAIL_BACKUP = "EmailBackup"
+        private const val PASS_TO_QUEST_BACKUP = "passQuestBackup"
     }
 
 }

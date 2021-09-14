@@ -26,6 +26,12 @@ class ResumeViewModel(
     private val _dataAndColorsGraph = MutableLiveData<DataAndColorsGraph>()
     val dataAndColorsGraph: LiveData<DataAndColorsGraph> = _dataAndColorsGraph
 
+    private val _showDialogQuestBackup = MutableLiveData<Unit>()
+    val showDialogQuestBackup: LiveData<Unit> = _showDialogQuestBackup
+
+    private val _showBackupSucess = MutableLiveData<String>()
+    val showBackupSucess: LiveData<String> = _showBackupSucess
+
     fun requestListProducts() {
         viewModelScope.launch {
             _listProducts.postValue(resumeRepository.returnListProducts())
@@ -64,6 +70,31 @@ class ResumeViewModel(
 
             _dataAndColorsGraph.postValue(DataAndColorsGraph(pieEntries, colors))
         }
+    }
+
+    fun initResume(){
+
+
+
+
+        _showDialogQuestBackup.postValue(Unit)
+
+
+
+
+        if(!resumeRepository.passedByQuestBackup()){
+            _showDialogQuestBackup.postValue(Unit)
+        }
+    }
+
+    fun acceptBackupData(){
+        viewModelScope.launch {
+            _showBackupSucess.postValue(resumeRepository.acceptBackupData().toString())
+        }
+    }
+
+    fun deniedBackupData(){
+        resumeRepository.deniedBackupData()
     }
 
 }

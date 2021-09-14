@@ -20,12 +20,15 @@ class LoginRepository(private val sessionManager: SessionManager) {
 
     fun getUserPassword(): String = sessionManager.getUserPassword()
 
+    fun saveUserEmailBackup(email: String) = sessionManager.saveUserEmailBackup(email)
+
     suspend fun loginInFirebase(user: User) {
         withContext(Dispatchers.IO) {
             var erroAuth = false
             FirebaseAuth.getInstance().signInWithEmailAndPassword(user.email, user.password)
                 .addOnCompleteListener {
                     if (!it.isSuccessful) return@addOnCompleteListener
+                    saveUserEmailBackup(user.email.replace(".com",""))
                 }
                 .addOnFailureListener {
                     erroAuth = true

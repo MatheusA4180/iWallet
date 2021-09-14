@@ -1,17 +1,23 @@
 package com.example.iwallet.features.resume.repository
 
 import com.example.iwallet.features.resume.fragments.DescriptionProductFragment.Companion.APPLICATION
+import com.example.iwallet.utils.data.local.SessionManager
 import com.example.iwallet.utils.data.local.database.ExtractDAO
 import com.example.iwallet.utils.data.local.database.ProductDAO
 import com.example.iwallet.utils.model.resume.Product
 import com.example.iwallet.utils.model.wallet.ExtractEntity
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DescriptionProductRepository(
+    private val sessionManager: SessionManager,
     private val productDAO: ProductDAO,
     private val extractDAO: ExtractDAO
 ) {
+
+    fun getSaveUserEmailBackup(): String = sessionManager.getSaveUserEmailBackup()
 
     suspend fun deleteProduct(nameProduct: String) {
         withContext(Dispatchers.IO) {
@@ -44,16 +50,17 @@ class DescriptionProductRepository(
 
     private suspend fun saveExtract(productNew: Product, buttonPressed: String) {
         withContext(Dispatchers.IO) {
-            extractDAO.saveExtract(
-                ExtractEntity(
-                    productNew.broker,
-                    productNew.name,
-                    productNew.category,
-                    productNew.total,
-                    productNew.date,
-                    buttonPressed
-                )
+            val extract = ExtractEntity(
+                productNew.broker,
+                productNew.name,
+                productNew.category,
+                productNew.total,
+                productNew.date,
+                buttonPressed
             )
+            extractDAO.saveExtract(extract)
+            Firebase.database.reference.child(ResumeRepository.PATH_USERS).child(getSaveUserEmailBackup())
+                .child(ResumeRepository.PATH_EXTRACT).push().setValue(extract)
         }
     }
 

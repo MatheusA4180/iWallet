@@ -1,12 +1,15 @@
 package com.example.iwallet.features.resume.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,11 +21,16 @@ import com.example.iwallet.features.resume.adapter.ListProductCompactAdapter
 import com.example.iwallet.features.resume.adapter.ViewPagerNewsAdapter
 import com.example.iwallet.features.resume.viewmodel.ResumeViewModel
 import com.example.iwallet.utils.helperfunctions.HelperFunctions.converterToReal
+import com.example.iwallet.utils.model.intro.User
+import com.example.iwallet.utils.model.resume.Product
+import com.example.iwallet.utils.model.wallet.Extract
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ResumeFragment : Fragment() {
@@ -76,6 +84,16 @@ class ResumeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        viewModel.initResume()
+
+        viewModel.showDialogQuestBackup.observe(viewLifecycleOwner,{
+            showDialogQuestBackup()
+        })
+
+        viewModel.showBackupSucess.observe(viewLifecycleOwner,{
+            AlertDialog.Builder(requireContext()).setMessage(it).show()
+        })
 
         binding.pagerNews.adapter = ViewPagerNewsAdapter(this)
 
@@ -186,6 +204,26 @@ class ResumeFragment : Fragment() {
         pieData.setDrawValues(false)
         pieChart!!.data = pieData
         pieChart!!.invalidate()
+    }
+
+    private fun showDialogQuestBackup(){
+        AlertDialog.Builder(requireContext())
+            .setTitle("Deseja restaurar os dados da nuvem?")
+            .setMessage("")
+            .setNegativeButton(
+                getString(
+                    R.string.option_profile_dialog_1
+                )
+            ) { _, _ ->
+                viewModel.deniedBackupData()
+            }
+            .setPositiveButton(
+                getString(R.string.option_profile_dialog_2)
+            ) { _, _ ->
+                viewModel.acceptBackupData()
+            }
+            .create()
+            .show()
     }
 
     override fun onDestroyView() {
